@@ -1,0 +1,2135 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>مسار — تتبع عاداتك الذكي | نسخة احترافية</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* === RESET & BASE === */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Tajawal',sans-serif;direction:rtl;text-align:right;min-height:100vh;transition:background .3s,color .3s;overflow-x:hidden}
+
+/* === CSS VARIABLES === */
+:root{
+  --bg:#FDF8F0;
+  --bg2:#F5EFE2;
+  --bg3:#EDE5D5;
+  --card:#FFFFFF;
+  --border:#1A1A1A;
+  --text:#1A1A1A;
+  --text2:#555;
+  --text3:#888;
+  --green:#2D6A4F;
+  --green-light:#52B788;
+  --green-bg:#D8F3DC;
+  --gold:#D4A017;
+  --gold-light:#F4D35E;
+  --gold-bg:#FFF8DC;
+  --red:#C0392B;
+  --red-light:#E74C3C;
+  --red-bg:#FDEDEC;
+  --blue:#1A5276;
+  --blue-light:#2E86C1;
+  --blue-bg:#D6EAF8;
+  --orange:#D35400;
+  --orange-light:#E67E22;
+  --orange-bg:#FDEBD0;
+  --purple:#6C3483;
+  --purple-light:#9B59B6;
+  --purple-bg:#F5EEF8;
+  --shadow-sm:3px 3px 0 var(--border);
+  --shadow-md:4px 4px 0 var(--border);
+  --shadow-lg:6px 6px 0 var(--border);
+  --radius:12px;
+  --radius-sm:8px;
+  --nav-h:70px;
+}
+[data-theme="dark"]{
+  --bg:#14110F;
+  --bg2:#1E1A16;
+  --bg3:#2A2420;
+  --card:#1E1A16;
+  --border:#E8DCC8;
+  --text:#E8DCC8;
+  --text2:#B8A898;
+  --text3:#7A6A58;
+  --green:#52B788;
+  --green-light:#74C69D;
+  --green-bg:#1B3A2D;
+  --gold:#F4D35E;
+  --gold-light:#F6E27A;
+  --gold-bg:#2D2510;
+  --red:#E74C3C;
+  --red-light:#F1948A;
+  --red-bg:#2D1010;
+  --blue:#2E86C1;
+  --blue-light:#5DADE2;
+  --blue-bg:#0D1F2D;
+  --orange:#E67E22;
+  --orange-light:#F39C12;
+  --orange-bg:#2D1800;
+  --purple:#9B59B6;
+  --purple-light:#BB8FCE;
+  --purple-bg:#1E1028;
+  --shadow-sm:3px 3px 0 var(--border);
+  --shadow-md:4px 4px 0 var(--border);
+  --shadow-lg:6px 6px 0 var(--border);
+}
+body{background:var(--bg);color:var(--text)}
+
+/* === SCROLLBAR === */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--bg2)}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+
+/* === TYPOGRAPHY === */
+h1{font-size:2rem;font-weight:900;line-height:1.2}
+h2{font-size:1.5rem;font-weight:800}
+h3{font-size:1.1rem;font-weight:700}
+p{line-height:1.6}
+
+/* === LAYOUT === */
+.app{display:flex;flex-direction:column;min-height:100vh}
+.main-content{flex:1;padding-bottom:calc(var(--nav-h) + 20px)}
+
+/* === TOP BAR === */
+.topbar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 20px;background:var(--bg);
+  border-bottom:2px solid var(--border);
+  position:sticky;top:0;z-index:100;
+}
+.topbar-logo{font-size:1.4rem;font-weight:900;letter-spacing:-1px}
+.topbar-logo span{color:var(--green)}
+.topbar-actions{display:flex;gap:8px;align-items:center}
+.icon-btn{
+  width:38px;height:38px;border-radius:var(--radius-sm);
+  border:2px solid var(--border);background:var(--card);
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  font-size:1rem;transition:all .15s;box-shadow:var(--shadow-sm);
+  color:var(--text);
+}
+.icon-btn:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--border)}
+.icon-btn:active{transform:translate(1px,1px);box-shadow:1px 1px 0 var(--border)}
+.emergency-btn{
+  padding:6px 14px;border-radius:var(--radius-sm);
+  border:2px solid var(--red);background:var(--red-bg);
+  color:var(--red);font-family:'Tajawal',sans-serif;
+  font-weight:700;font-size:.85rem;cursor:pointer;
+  transition:all .15s;box-shadow:3px 3px 0 var(--red);
+}
+.emergency-btn:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--red)}
+.emergency-btn.active{background:var(--red);color:#fff}
+.points-badge{
+  padding:4px 12px;border-radius:20px;
+  border:2px solid var(--border);background:var(--gold-bg);
+  color:var(--gold);font-weight:800;font-size:.85rem;
+  display:flex;align-items:center;gap:4px;
+}
+
+/* === BOTTOM NAV (6 items) === */
+.bottom-nav{
+  position:fixed;bottom:0;left:0;right:0;height:var(--nav-h);
+  background:var(--card);border-top:2px solid var(--border);
+  display:flex;z-index:100;
+}
+.nav-item{
+  flex:1;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:2px;cursor:pointer;
+  transition:background .15s;border:none;background:none;
+  color:var(--text3);font-family:'Tajawal',sans-serif;
+  font-size:.62rem;font-weight:600;
+}
+.nav-item.active{color:var(--green)}
+.nav-item .nav-icon{font-size:1.1rem;transition:transform .2s}
+.nav-item.active .nav-icon{transform:scale(1.2)}
+.nav-item:hover{background:var(--bg2)}
+
+/* === PAGES === */
+.page{display:none;padding:20px;animation:fadeIn .2s ease}
+.page.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* === CARDS === */
+.card{
+  background:var(--card);border:2px solid var(--border);
+  border-radius:var(--radius);padding:18px;
+  box-shadow:var(--shadow-md);margin-bottom:16px;
+  transition:box-shadow .15s,transform .15s;
+}
+.card:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow-lg)}
+
+/* === HABIT CARD === */
+.habit-card{
+  background:var(--card);border:2px solid var(--border);
+  border-radius:var(--radius);padding:16px;margin-bottom:14px;
+  box-shadow:var(--shadow-md);position:relative;overflow:hidden;
+}
+.habit-card::before{
+  content:'';position:absolute;top:0;right:0;bottom:0;width:5px;
+  background:var(--habit-color,var(--green));
+}
+.habit-card.completed{opacity:.85}
+.habit-card.completed .habit-name{text-decoration:line-through;color:var(--text3)}
+.habit-header{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.habit-emoji{
+  width:44px;height:44px;border-radius:var(--radius-sm);
+  border:2px solid var(--border);background:var(--bg2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.3rem;flex-shrink:0;
+}
+.habit-info{flex:1}
+.habit-name{font-weight:700;font-size:1rem;margin-bottom:2px}
+.habit-meta{font-size:.75rem;color:var(--text3);display:flex;align-items:center;gap:6px}
+.streak-badge{
+  display:inline-flex;align-items:center;gap:3px;
+  padding:2px 8px;border-radius:20px;font-size:.72rem;font-weight:700;
+  border:1.5px solid var(--border);background:var(--gold-bg);color:var(--gold);
+}
+.priority-badge{font-size:.8rem;margin-right:2px}
+.habit-progress-bar{
+  height:8px;border-radius:4px;background:var(--bg3);
+  border:1.5px solid var(--border);margin-bottom:12px;overflow:hidden;
+}
+.habit-progress-fill{
+  height:100%;border-radius:3px;
+  background:var(--habit-color,var(--green));
+  transition:width .4s cubic-bezier(.34,1.56,.64,1);
+}
+.habit-actions{display:flex;gap:8px}
+.habit-btn{
+  flex:1;padding:8px 4px;border-radius:var(--radius-sm);
+  border:2px solid var(--border);background:var(--bg2);
+  cursor:pointer;font-family:'Tajawal',sans-serif;
+  font-size:.82rem;font-weight:700;color:var(--text);
+  transition:all .15s;box-shadow:var(--shadow-sm);display:flex;
+  align-items:center;justify-content:center;gap:4px;
+}
+.habit-btn:hover{transform:translate(-1px,-1px);box-shadow:3px 3px 0 var(--border)}
+.habit-btn:active{transform:translate(1px,1px);box-shadow:1px 1px 0 var(--border)}
+.habit-btn.complete{background:var(--green-bg);border-color:var(--green);color:var(--green)}
+.habit-btn.emergency-action{background:var(--orange-bg);border-color:var(--orange);color:var(--orange)}
+.habit-btn.skip{background:var(--bg2)}
+.habit-btn.done-state{
+  background:var(--green);color:#fff;border-color:var(--green);
+  cursor:default;
+}
+.habit-btn.done-state:hover{transform:none;box-shadow:var(--shadow-sm)}
+
+/* === NOTES PANEL (Feature 1) === */
+.notes-panel{
+  max-height:0;overflow:hidden;
+  transition:max-height .3s cubic-bezier(.4,0,.2,1),padding .3s;
+  padding:0 0;border-top:0px solid var(--border);
+}
+.notes-panel.open{
+  max-height:200px;padding:12px 0 4px;
+  border-top:1.5px solid var(--border);
+}
+.notes-toggle-btn{
+  width:28px;height:28px;border-radius:6px;
+  border:1.5px solid var(--border);background:var(--bg2);
+  cursor:pointer;font-size:.75rem;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;transition:all .15s;flex-shrink:0;
+}
+.notes-toggle-btn.has-notes::after{
+  content:'';position:absolute;
+  top:-3px;left:-3px;
+  width:8px;height:8px;border-radius:50%;
+  background:var(--green);border:1.5px solid var(--card);
+}
+.save-indicator{
+  font-size:.7rem;color:var(--green);opacity:0;
+  transition:opacity .3s;text-align:left;
+}
+.save-indicator.show{opacity:1;}
+.habit-footer-row{display:flex;align-items:center;justify-content:space-between;margin-top:10px;gap:8px}
+
+/* === REP BOXES (Feature 2) === */
+.rep-boxes{display:flex;flex-wrap:wrap;gap:5px;align-items:center;margin-bottom:4px}
+.rep-box{
+  width:28px;height:28px;border:2px solid var(--border);
+  border-radius:6px;background:var(--bg2);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.75rem;transition:all .15s;
+  box-shadow:2px 2px 0 var(--border);
+}
+.rep-box.filled{
+  background:var(--green);border-color:var(--green);color:#fff;
+  box-shadow:2px 2px 0 var(--green-light);cursor:default;
+}
+.rep-box:not(.filled):hover{
+  transform:translate(-1px,-1px);box-shadow:3px 3px 0 var(--border);
+}
+.rep-progress-label{font-size:.72rem;font-weight:700;color:var(--green);margin-top:2px}
+
+/* === PROGRESS RING === */
+.progress-ring-wrap{display:flex;align-items:center;justify-content:center;position:relative}
+.ring-label{
+  position:absolute;text-align:center;
+  font-weight:900;font-size:1.5rem;line-height:1.1;
+}
+.ring-label small{font-size:.7rem;font-weight:600;color:var(--text2);display:block}
+
+/* === DASHBOARD === */
+.dash-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.day-score-wrap{display:flex;align-items:center;gap:20px}
+.motivational-msg{
+  font-size:.85rem;color:var(--text2);font-style:italic;
+  padding:8px 14px;background:var(--bg2);border-radius:var(--radius-sm);
+  border:1.5px solid var(--border);margin-bottom:18px;
+  border-right:4px solid var(--green);
+}
+.section-title{
+  font-size:.8rem;font-weight:800;color:var(--text3);
+  text-transform:uppercase;letter-spacing:1.5px;margin-bottom:12px;
+  display:flex;align-items:center;gap:8px;
+}
+.section-title::after{content:'';flex:1;height:1.5px;background:var(--bg3)}
+
+/* === STATS GRID === */
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px}
+.stat-card{
+  background:var(--card);border:2px solid var(--border);
+  border-radius:var(--radius);padding:14px;
+  box-shadow:var(--shadow-sm);text-align:center;
+}
+.stat-value{font-size:1.6rem;font-weight:900}
+.stat-label{font-size:.72rem;color:var(--text3);font-weight:600;margin-top:2px}
+
+/* === HEATMAP === */
+.heatmap-container{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-top:12px}
+.heatmap-day{aspect-ratio:1;border-radius:6px;border:1.5px solid var(--border);background:var(--bg3);transition:transform .1s}
+.heatmap-day[data-intensity="0"]{background:var(--bg3)}
+.heatmap-day[data-intensity="1"]{background:#9BE9A8}
+.heatmap-day[data-intensity="2"]{background:#40C463}
+.heatmap-day[data-intensity="3"]{background:#30A14E}
+.heatmap-day[data-intensity="4"]{background:#216E39}
+[data-theme="dark"] .heatmap-day[data-intensity="1"]{background:#2C6E2F}
+[data-theme="dark"] .heatmap-day[data-intensity="2"]{background:#228B22}
+[data-theme="dark"] .heatmap-day[data-intensity="3"]{background:#1E5A1E}
+[data-theme="dark"] .heatmap-day[data-intensity="4"]{background:#0E3A0E}
+.heatmap-day:hover{transform:scale(1.1);z-index:2}
+
+/* === WEEK BARS === */
+.week-bars{display:flex;gap:8px;align-items:flex-end;height:100px;padding:8px 0}
+.week-bar{
+  border-radius:4px 4px 0 0;background:var(--green-bg);
+  border:1.5px solid var(--border);position:relative;
+  width:100%;min-height:4px;transition:height .4s;
+}
+.week-bar.best{background:var(--green);border-color:var(--green)}
+.week-bar-label{
+  position:absolute;bottom:-20px;left:50%;transform:translateX(-50%);
+  font-size:.65rem;color:var(--text3);font-weight:600;white-space:nowrap;
+}
+.chart-wrap{background:var(--card);border:2px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:16px;box-shadow:var(--shadow-sm)}
+.chart-title{font-size:.8rem;font-weight:700;color:var(--text3);margin-bottom:8px}
+canvas{width:100%!important;display:block}
+
+/* === COMPANION === */
+.companion-wrap{
+  position:fixed;bottom:calc(var(--nav-h) + 16px);left:16px;
+  z-index:90;
+}
+.companion-body{
+  width:60px;height:60px;cursor:pointer;
+  transition:transform .2s;
+  position:relative;
+}
+.companion-body:hover{transform:scale(1.1)}
+.companion-bubble{
+  position:absolute;bottom:70px;left:0;
+  width:220px;background:var(--card);
+  border:2px solid var(--border);border-radius:var(--radius);
+  padding:12px;box-shadow:var(--shadow-lg);
+  font-size:.82rem;line-height:1.5;
+  opacity:0;transform:translateY(10px) scale(.95);
+  transition:all .25s cubic-bezier(.34,1.56,.64,1);
+  pointer-events:none;
+}
+.companion-bubble.show{opacity:1;transform:translateY(0) scale(1)}
+.companion-bubble::after{
+  content:'';position:absolute;bottom:-10px;left:20px;
+  border-left:8px solid transparent;border-right:8px solid transparent;
+  border-top:10px solid var(--border);
+}
+
+/* === ZAD SVG COMPANION === */
+.zad-svg{width:60px;height:60px}
+
+/* === FORMS === */
+.form-group{margin-bottom:16px}
+.form-label{font-size:.82rem;font-weight:700;margin-bottom:6px;display:block;color:var(--text2)}
+.form-input{
+  width:100%;padding:10px 14px;border:2px solid var(--border);
+  border-radius:var(--radius-sm);background:var(--bg2);
+  color:var(--text);font-family:'Tajawal',sans-serif;
+  font-size:.95rem;outline:none;transition:border-color .15s,box-shadow .15s;
+}
+.form-input:focus{border-color:var(--green);box-shadow:2px 2px 0 var(--green)}
+select.form-input{cursor:pointer}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.emoji-picker{display:flex;flex-wrap:wrap;gap:8px;padding:10px;background:var(--bg2);border-radius:var(--radius-sm);border:2px solid var(--border)}
+.emoji-opt{width:36px;height:36px;border-radius:var(--radius-sm);border:2px solid transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.2rem;transition:all .1s}
+.emoji-opt:hover,.emoji-opt.selected{border-color:var(--green);background:var(--green-bg)}
+.color-picker{display:flex;gap:8px;flex-wrap:wrap}
+.color-opt{width:32px;height:32px;border-radius:50%;border:3px solid transparent;cursor:pointer;transition:transform .1s}
+.color-opt:hover,.color-opt.selected{transform:scale(1.2);border-color:var(--border)}
+
+/* === BUTTONS === */
+.btn{
+  padding:11px 22px;border-radius:var(--radius-sm);
+  border:2px solid var(--border);font-family:'Tajawal',sans-serif;
+  font-weight:700;font-size:.95rem;cursor:pointer;
+  transition:all .15s;display:inline-flex;align-items:center;gap:8px;
+}
+.btn-primary{background:var(--green);color:#fff;border-color:var(--green);box-shadow:var(--shadow-md)}
+.btn-primary:hover{transform:translate(-2px,-2px);box-shadow:var(--shadow-lg)}
+.btn-primary:active{transform:translate(1px,1px);box-shadow:1px 1px 0 var(--green)}
+.btn-secondary{background:var(--card);color:var(--text);box-shadow:var(--shadow-sm)}
+.btn-secondary:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow-md)}
+.btn-danger{background:var(--red-bg);color:var(--red);border-color:var(--red);box-shadow:3px 3px 0 var(--red)}
+.btn-danger:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--red)}
+.btn-full{width:100%;justify-content:center}
+
+/* === MODAL === */
+.modal-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.5);
+  z-index:200;display:none;align-items:center;justify-content:center;
+  padding:20px;
+}
+.modal-overlay.open{display:flex}
+.modal{
+  background:var(--card);border:2px solid var(--border);
+  border-radius:var(--radius);box-shadow:var(--shadow-lg);
+  width:100%;max-width:480px;max-height:90vh;overflow-y:auto;
+  animation:modalIn .25s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes modalIn{from{transform:scale(.9) translateY(20px);opacity:0}to{transform:none;opacity:1}}
+.modal-header{
+  padding:18px 20px;border-bottom:2px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;background:var(--card);z-index:1;
+}
+.modal-body{padding:20px}
+.modal-footer{padding:16px 20px;border-top:2px solid var(--border);display:flex;gap:10px}
+
+/* === HABIT MODAL STEPS (Feature 3) === */
+.step-indicator{display:flex;gap:6px;justify-content:center;margin-bottom:16px}
+.step-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:var(--bg3);border:1.5px solid var(--border);transition:.2s;
+}
+.step-dot.active{background:var(--green);border-color:var(--green);width:22px;border-radius:4px}
+.modal-steps{overflow:hidden}
+.modal-step{display:none}
+.modal-step.active{display:block}
+.step-nav{display:flex;gap:10px;margin-top:8px}
+.step-title-badge{
+  font-size:.72rem;font-weight:800;color:var(--text3);letter-spacing:1px;
+  text-transform:uppercase;margin-bottom:12px;
+  display:flex;align-items:center;gap:6px;
+}
+.priority-pills{display:flex;gap:8px;flex-wrap:wrap}
+.priority-pill{
+  padding:7px 16px;border-radius:20px;border:2px solid var(--border);
+  background:var(--bg2);cursor:pointer;font-family:'Tajawal',sans-serif;
+  font-weight:700;font-size:.85rem;color:var(--text);transition:.15s;
+}
+.priority-pill.active-high{background:var(--red-bg);border-color:var(--red);color:var(--red)}
+.priority-pill.active-medium{background:var(--gold-bg);border-color:var(--gold);color:var(--gold)}
+.priority-pill.active-low{background:var(--green-bg);border-color:var(--green);color:var(--green)}
+.char-counter{font-size:.72rem;color:var(--text3);text-align:left;margin-top:3px}
+.char-counter.warn{color:var(--red)}
+.optional-notes-toggle{
+  font-size:.8rem;color:var(--blue-light);cursor:pointer;margin-bottom:8px;display:block;
+  background:none;border:none;font-family:'Tajawal',sans-serif;font-weight:600;
+}
+.optional-notes-area{display:none;margin-bottom:8px}
+.optional-notes-area.open{display:block}
+
+/* === SKELETON === */
+.skel{background:var(--bg3);border-radius:4px;animation:skelPulse 1.5s ease infinite}
+@keyframes skelPulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+/* === TOAST === */
+.toast{
+  position:fixed;top:80px;left:50%;transform:translateX(-50%) translateY(-100px);
+  background:var(--card);border:2px solid var(--border);
+  border-radius:var(--radius);padding:12px 20px;
+  box-shadow:var(--shadow-lg);z-index:400;font-weight:700;font-size:.9rem;
+  transition:transform .3s cubic-bezier(.34,1.56,.64,1);
+  display:flex;align-items:center;gap:8px;min-width:250px;
+}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.toast.success{border-color:var(--green);color:var(--green)}
+.toast.gold{border-color:var(--gold);color:var(--gold)}
+.toast.info{border-color:var(--blue);color:var(--blue)}
+.toast.error{border-color:var(--red);color:var(--red)}
+
+/* === CONFETTI === */
+.confetti-wrap{position:fixed;inset:0;pointer-events:none;z-index:500;overflow:hidden}
+.confetti-piece{
+  position:absolute;width:10px;height:10px;border-radius:2px;
+  animation:confettiFall linear forwards;
+  top:-20px;
+}
+@keyframes confettiFall{
+  to{transform:translateY(100vh) rotate(720deg);opacity:0}
+}
+
+/* === EMPTY STATE === */
+.empty-state{text-align:center;padding:40px 20px;color:var(--text3)}
+.empty-icon{font-size:3rem;margin-bottom:12px}
+
+/* === HABITS LIST (manage tab) === */
+.habits-list-item{
+  display:flex;align-items:center;gap:12px;padding:14px;
+  background:var(--card);border:2px solid var(--border);
+  border-radius:var(--radius-sm);margin-bottom:10px;
+  box-shadow:var(--shadow-sm);
+}
+.habits-list-actions{display:flex;gap:6px}
+.small-action-btn{
+  width:32px;height:32px;border-radius:var(--radius-sm);
+  border:1.5px solid var(--border);background:var(--bg2);
+  cursor:pointer;font-size:.85rem;display:flex;align-items:center;justify-content:center;
+  transition:all .15s;
+}
+.small-action-btn.delete{border-color:var(--red);background:var(--red-bg);color:var(--red)}
+.small-action-btn:hover{transform:translate(-1px,-1px)}
+
+/* === BADGES === */
+.badges-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px}
+.badge-item{
+  background:var(--card);border:2px solid var(--border);
+  border-radius:var(--radius);padding:12px;text-align:center;
+  box-shadow:var(--shadow-sm);transition:all .15s;
+}
+.badge-item.locked{opacity:.4;filter:grayscale(1)}
+.badge-emoji{font-size:1.8rem;margin-bottom:4px}
+.badge-name{font-size:.72rem;font-weight:700}
+.badge-desc{font-size:.62rem;color:var(--text3)}
+
+/* === REWARDS === */
+.reward-card{
+  display:flex;align-items:center;gap:12px;padding:14px;
+  background:var(--card);border:2px solid var(--border);
+  border-radius:var(--radius-sm);margin-bottom:10px;
+  box-shadow:var(--shadow-sm);
+}
+.reward-emoji-big{font-size:2rem;flex-shrink:0}
+.reward-info{flex:1}
+.reward-cost{color:var(--gold);font-weight:700;font-size:.85rem}
+
+/* === LEVEL BAR === */
+.level-bar-wrap{background:var(--bg3);border-radius:4px;border:1.5px solid var(--border);height:8px;overflow:hidden}
+.level-bar-fill{height:100%;background:var(--green);border-radius:3px;transition:width .4s}
+
+/* === HISTORY === */
+.history-item{
+  display:flex;align-items:center;gap:10px;padding:10px 0;
+  border-bottom:1px solid var(--bg3);
+}
+.history-item:last-child{border-bottom:none}
+.history-icon{font-size:1.3rem;flex-shrink:0}
+.history-pts{font-weight:800;color:var(--green);margin-right:auto}
+
+/* === INSIGHT === */
+.insight-card{
+  background:var(--card);border:2px solid var(--border);border-radius:var(--radius);
+  padding:14px;display:flex;gap:12px;align-items:flex-start;
+  box-shadow:var(--shadow-sm);margin-bottom:12px;
+}
+.insight-icon{font-size:1.5rem;flex-shrink:0}
+.insight-text{font-size:.85rem;line-height:1.6}
+
+/* === MISSED REASONS === */
+.missed-reason-btn{
+  display:block;width:100%;padding:12px;margin-bottom:8px;
+  background:var(--bg2);border:2px solid var(--border);
+  border-radius:var(--radius-sm);text-align:right;
+  font-family:'Tajawal',sans-serif;font-weight:700;font-size:.9rem;
+  cursor:pointer;transition:all .15s;
+}
+.missed-reason-btn:hover{background:var(--green-bg);border-color:var(--green);color:var(--green)}
+
+/* === SHAKE ANIMATION === */
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.shake{animation:shake .3s ease}
+
+/* ===================== POMODORO (Feature 4) ===================== */
+.pomodoro-mode-label{
+  font-size:1rem;font-weight:800;
+  padding:6px 18px;border-radius:20px;
+  border:2px solid var(--border);display:inline-block;
+  margin-bottom:16px;background:var(--green-bg);color:var(--green);
+}
+.pomodoro-mode-label.break{background:var(--blue-bg);color:var(--blue)}
+.pomodoro-mode-label.longBreak{background:var(--purple-bg);color:var(--purple)}
+.pomodoro-ring-wrap{
+  position:relative;width:220px;height:220px;margin:0 auto;
+}
+.pomodoro-time-overlay{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+}
+.pomodoro-digits{
+  font-size:3.2rem;font-weight:900;
+  font-family:'IBM Plex Mono',monospace;line-height:1;
+}
+.pomodoro-controls{
+  display:flex;gap:12px;justify-content:center;margin-top:24px;
+}
+.pomodoro-session-dots{
+  display:flex;gap:8px;justify-content:center;margin-bottom:12px;
+}
+.session-dot{
+  width:10px;height:10px;border-radius:50%;
+  border:2px solid var(--border);background:var(--bg3);transition:background .3s;
+}
+.session-dot.done{background:var(--green);border-color:var(--green)}
+.session-dot.current{background:var(--gold);border-color:var(--gold)}
+
+/* === TOGGLE SWITCH === */
+.toggle-switch{position:relative;width:48px;height:26px;display:inline-block}
+.toggle-switch input{opacity:0;width:0;height:0}
+.toggle-slider{
+  position:absolute;inset:0;
+  background:var(--bg3);border:2px solid var(--border);
+  border-radius:13px;cursor:pointer;transition:background .2s;
+}
+.toggle-slider::before{
+  content:'';position:absolute;width:18px;height:18px;
+  border-radius:50%;background:var(--text3);
+  top:2px;right:2px;transition:transform .2s;
+}
+.toggle-switch input:checked + .toggle-slider{background:var(--green-bg);border-color:var(--green)}
+.toggle-switch input:checked + .toggle-slider::before{
+  background:var(--green);transform:translateX(-22px);
+}
+
+/* ===================== AI CHAT (Feature 5) ===================== */
+.ai-key-overlay{
+  position:absolute;inset:0;background:rgba(0,0,0,.5);
+  z-index:150;display:flex;align-items:center;justify-content:center;
+}
+.ai-messages-list{
+  min-height:300px;max-height:calc(100vh - 280px);
+  overflow-y:auto;display:flex;flex-direction:column;gap:12px;
+  padding:4px 0 16px;scroll-behavior:smooth;
+}
+.ai-msg{display:flex;align-items:flex-end;gap:8px}
+.ai-msg--user{flex-direction:row-reverse}
+.ai-avatar{
+  width:32px;height:32px;border-radius:50%;
+  border:2px solid var(--border);background:var(--bg2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1rem;flex-shrink:0;
+}
+.ai-bubble{
+  max-width:75%;padding:10px 14px;
+  border-radius:var(--radius);border:2px solid var(--border);
+  background:var(--card);font-size:.88rem;line-height:1.6;
+  box-shadow:var(--shadow-sm);
+}
+.ai-msg--user .ai-bubble{background:var(--green-bg);border-color:var(--green)}
+.ai-welcome{text-align:center;padding:40px 20px}
+.ai-suggestions{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:16px}
+.ai-suggestion-chip{
+  padding:6px 14px;border-radius:20px;border:2px solid var(--border);
+  background:var(--bg2);cursor:pointer;font-family:'Tajawal',sans-serif;
+  font-size:.8rem;font-weight:600;color:var(--text);transition:all .15s;
+  box-shadow:var(--shadow-sm);
+}
+.ai-suggestion-chip:hover{
+  transform:translate(-1px,-1px);box-shadow:var(--shadow-md);
+  background:var(--green-bg);border-color:var(--green);color:var(--green);
+}
+.ai-input-bar{
+  display:flex;gap:8px;align-items:flex-end;
+  position:sticky;bottom:calc(var(--nav-h) + 12px);
+  background:var(--bg);padding:10px 0 4px;
+  border-top:2px solid var(--border);margin-top:8px;
+}
+.ai-textarea{
+  flex:1;padding:10px 14px;border:2px solid var(--border);
+  border-radius:var(--radius-sm);background:var(--bg2);
+  color:var(--text);font-family:'Tajawal',sans-serif;
+  font-size:.95rem;resize:none;outline:none;
+  min-height:44px;max-height:120px;
+  transition:border-color .15s,box-shadow .15s;
+}
+.ai-textarea:focus{border-color:var(--green);box-shadow:2px 2px 0 var(--green)}
+.ai-typing{display:flex;gap:4px;align-items:center;padding:12px 14px}
+.ai-typing span{
+  width:7px;height:7px;border-radius:50%;
+  background:var(--text3);animation:typingBounce 1.2s infinite;
+}
+.ai-typing span:nth-child(2){animation-delay:.2s}
+.ai-typing span:nth-child(3){animation-delay:.4s}
+@keyframes typingBounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}
+
+/* page-ai relative for overlay */
+#page-ai{position:relative}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+  <header class="topbar" id="topbar">
+    <div class="topbar-logo">مسار<span>.</span></div>
+    <div class="topbar-actions">
+      <div class="points-badge">⭐ <span id="points-num">0</span></div>
+      <button class="icon-btn" id="settings-btn" title="الإعدادات" aria-label="الإعدادات">⚙️</button>
+      <button class="emergency-btn" id="emergency-toggle">🆘 طوارئ</button>
+      <button class="icon-btn" id="theme-btn" title="تغيير المظهر" aria-label="تغيير المظهر">🌙</button>
+    </div>
+  </header>
+
+  <div class="main-content">
+    <!-- DASHBOARD -->
+    <div class="page active" id="page-dashboard">
+      <div class="dash-header">
+        <div><h2 id="greeting">مرحباً 👋</h2><div id="date-display" style="font-size:.8rem;color:var(--text3)"></div></div>
+        <div class="progress-ring-wrap">
+          <svg width="70" height="70" viewBox="0 0 70 70">
+            <circle cx="35" cy="35" r="28" fill="none" stroke="var(--bg3)" stroke-width="7"/>
+            <circle id="ring-progress" cx="35" cy="35" r="28" fill="none" stroke="var(--green)" stroke-width="7" stroke-dasharray="175.9" stroke-dashoffset="175.9" stroke-linecap="round" transform="rotate(-90 35 35)" style="transition:stroke-dashoffset .6s cubic-bezier(.34,1.56,.64,1)"/>
+          </svg>
+          <div class="ring-label"><span id="ring-pct">0%</span></div>
+        </div>
+      </div>
+      <div class="motivational-msg" id="daily-msg">جاري التحميل...</div>
+      <div class="section-title">العادات اليومية</div>
+      <div id="habits-dashboard-list"></div>
+    </div>
+
+    <!-- HABITS -->
+    <div class="page" id="page-habits">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px"><h2>عاداتي</h2><button class="btn btn-primary" onclick="showAddHabitModal()">+ إضافة عادة</button></div>
+      <div id="habits-manage-list"></div>
+    </div>
+
+    <!-- REWARDS -->
+    <div class="page" id="page-rewards">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px"><h2>المكافآت 🏆</h2><button class="btn btn-primary" onclick="showAddRewardModal()" style="font-size:.85rem;padding:8px 14px">+ مكافأة</button></div>
+      <div class="card" style="text-align:center;margin-bottom:20px"><div style="font-size:2.5rem;font-weight:900;color:var(--gold)" id="reward-pts-display">0</div><div style="font-size:.82rem;color:var(--text3);margin-bottom:10px">نقطة متاحة</div><div style="font-size:.78rem;color:var(--text2)">المستوى <strong id="reward-level">1</strong></div><div class="level-bar-wrap" style="margin-top:8px"><div class="level-bar-fill" id="level-bar-fill" style="width:0%"></div></div></div>
+      <div class="section-title">شاراتي</div><div class="badges-grid" id="badges-grid"></div>
+      <div class="section-title">مكافآتي</div><div id="rewards-list"></div>
+      <div class="section-title">سجل النقاط</div><div class="card" id="points-history-list" style="padding:8px 16px"></div>
+    </div>
+
+    <!-- ANALYTICS -->
+    <div class="page" id="page-analytics">
+      <h2 style="margin-bottom:20px">التحليلات 📊</h2>
+      <div class="stats-grid" id="analytics-stats"></div>
+      <div class="card"><div class="section-title">خريطة التقدم (آخر 90 يوم)</div><div id="heatmap-container" class="heatmap-container"></div></div>
+      <div class="chart-wrap"><div class="chart-title">أداء الأسبوع الحالي</div><div class="week-bars" id="week-bars"></div><div style="height:26px"></div></div>
+      <div id="insights-section"></div>
+      <div class="chart-wrap"><div class="chart-title">نقاط الأسابيع الأخيرة</div><canvas id="points-chart" height="120"></canvas></div>
+    </div>
+
+    <!-- POMODORO (Feature 4) -->
+    <div class="page" id="page-pomodoro">
+      <div style="max-width:400px;margin:0 auto;text-align:center;padding:10px 0">
+        <div id="pomodoro-mode-label" class="pomodoro-mode-label">⚡ وقت التركيز</div>
+        <div id="pomodoro-session-dots" class="pomodoro-session-dots"></div>
+        <div class="pomodoro-ring-wrap">
+          <svg viewBox="0 0 120 120" width="220" height="220">
+            <circle cx="60" cy="60" r="54" fill="none" stroke="var(--bg3)" stroke-width="8"/>
+            <circle id="pomodoro-ring" cx="60" cy="60" r="54" fill="none"
+                    stroke="var(--green)" stroke-width="8" stroke-linecap="round"
+                    transform="rotate(-90 60 60)"
+                    style="transition:stroke-dashoffset 1s linear;"/>
+          </svg>
+          <div class="pomodoro-time-overlay">
+            <div id="pomodoro-time" class="pomodoro-digits">25:00</div>
+            <div id="pomodoro-sub" style="font-size:.75rem;color:var(--text3)">دقيقة</div>
+          </div>
+        </div>
+        <div class="pomodoro-controls">
+          <button class="btn btn-secondary" onclick="pomodoroReset()" title="إعادة تعيين">🔄 إعادة</button>
+          <button id="pomodoro-main-btn" class="btn btn-primary" onclick="pomodoroToggle()" title="ابدأ/أوقف">▶️ ابدأ</button>
+          <button class="btn btn-secondary" onclick="pomodoroSkipSession()" title="تخطي الجلسة">⏭️ تخطي</button>
+        </div>
+        <div class="card" style="margin-top:24px;text-align:right">
+          <div class="section-title">إعدادات الجلسة</div>
+          <div class="form-row" style="margin-bottom:12px">
+            <div class="form-group" style="margin:0">
+              <label class="form-label">وقت التركيز (دقيقة)</label>
+              <input type="number" id="pomo-work-input" class="form-input" min="1" max="90" value="25" onchange="updatePomodoroSettings()" aria-label="مدة التركيز">
+            </div>
+            <div class="form-group" style="margin:0">
+              <label class="form-label">وقت الراحة (دقيقة)</label>
+              <input type="number" id="pomo-break-input" class="form-input" min="1" max="30" value="5" onchange="updatePomodoroSettings()" aria-label="مدة الراحة">
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <label class="form-label" style="margin:0">تنبيه صوتي</label>
+            <label class="toggle-switch">
+              <input type="checkbox" id="pomo-sound-toggle" checked onchange="state.settings.pomodoroSettings.soundEnabled=this.checked;saveState()" aria-label="تنبيه صوتي">
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI ASSISTANT (Feature 5) -->
+    <div class="page" id="page-ai">
+      <!-- API Key Setup Overlay -->
+      <div id="ai-key-overlay" class="ai-key-overlay" style="display:none">
+        <div class="card" style="max-width:380px;width:100%;margin:0 20px">
+          <div style="font-size:1.8rem;text-align:center;margin-bottom:8px">🔑</div>
+          <h3 style="text-align:center;margin-bottom:8px">ربط Gemini AI</h3>
+          <p style="font-size:.82rem;color:var(--text3);margin-bottom:16px;text-align:center">
+            أدخل مفتاح Google Gemini API للحصول على مساعد ذكاء اصطناعي مجاناً.
+            <br><a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener" style="color:var(--blue-light)">احصل على مفتاح مجاني هنا ↗</a>
+          </p>
+          <div class="form-group">
+            <input type="password" id="ai-key-input" class="form-input" placeholder="AIza..." dir="ltr" aria-label="مفتاح Gemini API">
+          </div>
+          <button class="btn btn-primary btn-full" onclick="saveGeminiKey()">حفظ وتفعيل</button>
+          <button class="btn btn-secondary btn-full" style="margin-top:8px" onclick="document.getElementById('ai-key-overlay').style.display='none'">لاحقاً</button>
+        </div>
+      </div>
+
+      <!-- Chat Header -->
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+        <div>
+          <h2 style="font-size:1.1rem">🤖 مساعد زاد</h2>
+          <div style="font-size:.72rem;color:var(--text3)">مدعوم بـ Google Gemini</div>
+        </div>
+        <div style="display:flex;gap:8px">
+          <button class="icon-btn" onclick="clearAiHistory()" title="مسح المحادثة" aria-label="مسح المحادثة">🗑️</button>
+          <button class="icon-btn" onclick="showGeminiKeyPrompt()" title="تغيير المفتاح" aria-label="تغيير مفتاح API">🔑</button>
+        </div>
+      </div>
+
+      <!-- Messages -->
+      <div id="ai-messages-list" class="ai-messages-list" aria-label="محادثة مع المساعد"></div>
+
+      <!-- Input -->
+      <div class="ai-input-bar">
+        <textarea id="ai-input" class="ai-textarea"
+                  placeholder="اسألني عن عاداتك وأهدافك..."
+                  rows="1" dir="rtl" aria-label="رسالتك للمساعد"
+                  onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();aiSubmit()}"
+                  oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,120)+'px'">
+        </textarea>
+        <button class="btn btn-primary" onclick="aiSubmit()" style="padding:10px 16px;flex-shrink:0" title="إرسال">إرسال ←</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6-item bottom nav -->
+  <nav class="bottom-nav">
+    <button class="nav-item active" id="nav-dashboard" onclick="showPage('dashboard')"><span class="nav-icon">🏠</span><span>الرئيسية</span></button>
+    <button class="nav-item" id="nav-habits"    onclick="showPage('habits')"><span class="nav-icon">✅</span><span>العادات</span></button>
+    <button class="nav-item" id="nav-rewards"   onclick="showPage('rewards')"><span class="nav-icon">🏆</span><span>جوائز</span></button>
+    <button class="nav-item" id="nav-analytics" onclick="showPage('analytics')"><span class="nav-icon">📊</span><span>تحليل</span></button>
+    <button class="nav-item" id="nav-pomodoro"  onclick="showPage('pomodoro')"><span class="nav-icon">⏱️</span><span>فوكس</span></button>
+    <button class="nav-item" id="nav-ai"        onclick="showPage('ai')"><span class="nav-icon">🤖</span><span>زاد</span></button>
+  </nav>
+
+  <!-- Companion -->
+  <div class="companion-wrap"><div class="companion-bubble" id="companion-bubble"></div><div class="companion-body" id="companion-body"><svg class="zad-svg" viewBox="0 0 60 60"><ellipse cx="30" cy="38" rx="16" ry="14" fill="var(--green)" stroke="var(--border)" stroke-width="2"/><circle cx="30" cy="22" r="14" fill="var(--green-light)" stroke="var(--border)" stroke-width="2"/><ellipse cx="24" cy="21" rx="3" ry="3.5" fill="var(--border)"/><ellipse cx="36" cy="21" rx="3" ry="3.5" fill="var(--border)"/><circle cx="24.5" cy="21.5" r="1.5" fill="#fff"/><circle cx="36.5" cy="21.5" r="1.5" fill="#fff"/><path id="zad-mouth" d="M24 27 Q30 32 36 27" fill="none" stroke="var(--border)" stroke-width="2" stroke-linecap="round"/><ellipse cx="12" cy="38" rx="5" ry="8" fill="var(--green)" stroke="var(--border)" stroke-width="1.5" transform="rotate(-20 12 38)"/><ellipse cx="48" cy="38" rx="5" ry="8" fill="var(--green)" stroke="var(--border)" stroke-width="1.5" transform="rotate(20 48 38)"/><circle cx="20" cy="26" r="4" fill="var(--red-light)" opacity=".35"/><circle cx="40" cy="26" r="4" fill="var(--red-light)" opacity=".35"/></svg></div></div>
+</div>
+
+<!-- ===== MODALS ===== -->
+
+<!-- HABIT MODAL — 3-step (Feature 3) -->
+<div class="modal-overlay" id="habit-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="habit-modal-title">إضافة عادة</h3>
+      <button class="icon-btn" onclick="closeModal('habit-modal')" title="إغلاق" aria-label="إغلاق">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="edit-habit-id">
+      <!-- Step dots -->
+      <div class="step-indicator">
+        <div class="step-dot active" id="sdot-0"></div>
+        <div class="step-dot" id="sdot-1"></div>
+        <div class="step-dot" id="sdot-2"></div>
+      </div>
+      <div class="modal-steps">
+        <!-- Step 1: الأساسيات -->
+        <div class="modal-step active" id="modal-step-0">
+          <div class="step-title-badge">1 — الأساسيات</div>
+          <div class="form-group">
+            <label class="form-label">اسم العادة</label>
+            <input class="form-input" id="habit-name-input" maxlength="50" placeholder="مثال: القراءة اليومية" autofocus oninput="updateCharCounter(this.value.length)" aria-label="اسم العادة">
+            <div class="char-counter" id="char-counter">0 / 50</div>
+          </div>
+          <div class="form-group">
+            <button class="optional-notes-toggle" type="button" onclick="toggleOptionalNotes()" title="ملاحظات اختيارية">أضف ملاحظات اختيارية ▾</button>
+            <div class="optional-notes-area" id="optional-notes-area">
+              <textarea class="form-input" id="habit-base-notes-input" rows="2" placeholder="ملاحظات عامة عن هذه العادة..." dir="rtl" aria-label="ملاحظات العادة"></textarea>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">الأولوية</label>
+            <div class="priority-pills">
+              <button type="button" class="priority-pill active-high" id="prio-high" onclick="selectPriority('high')" title="أولوية عالية">🔴 عالية</button>
+              <button type="button" class="priority-pill active-medium" id="prio-medium" onclick="selectPriority('medium')" title="أولوية متوسطة" style="background:var(--gold-bg);border-color:var(--gold);color:var(--gold)">🟡 متوسطة</button>
+              <button type="button" class="priority-pill" id="prio-low" onclick="selectPriority('low')" title="أولوية منخفضة">🟢 منخفضة</button>
+            </div>
+            <input type="hidden" id="habit-priority-input" value="medium">
+          </div>
+          <div class="step-nav">
+            <button class="btn btn-primary" id="step0-next" onclick="goToStep(1)" style="flex:1">التالي ←</button>
+          </div>
+        </div>
+
+        <!-- Step 2: الإعدادات -->
+        <div class="modal-step" id="modal-step-1">
+          <div class="step-title-badge">2 — الإعدادات</div>
+          <div class="form-group">
+            <label class="form-label">النوع</label>
+            <select class="form-input" id="habit-type-input" aria-label="نوع العادة">
+              <option value="good">✅ إيجابية (أبنيها)</option>
+              <option value="bad">🚫 سلبية (أقللها)</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">الهدف اليومي</label>
+              <input class="form-input" id="habit-target-input" type="number" value="1" min="1" aria-label="الهدف اليومي">
+            </div>
+            <div class="form-group">
+              <label class="form-label">الوحدة</label>
+              <select class="form-input" id="habit-unit-input" aria-label="وحدة الهدف">
+                <option value="times">مرة</option>
+                <option value="minutes">دقيقة</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">هدف الطوارئ</label>
+              <input class="form-input" id="habit-mini-input" type="number" value="1" min="1" aria-label="هدف الطوارئ">
+            </div>
+            <div class="form-group">
+              <label class="form-label">وحدة الطوارئ</label>
+              <select class="form-input" id="habit-mini-unit-input" aria-label="وحدة الطوارئ">
+                <option value="times">مرة</option>
+                <option value="minutes">دقيقة</option>
+              </select>
+            </div>
+          </div>
+          <!-- Repetitions (Feature 2) -->
+          <div class="form-group">
+            <label class="form-label">عدد التكرارات اليومية</label>
+            <div style="display:flex;align-items:center;gap:10px">
+              <input type="number" id="habit-reps-input" class="form-input" min="1" max="50" value="1" style="width:80px;text-align:center" aria-label="عدد التكرارات">
+              <span class="form-label" style="color:var(--text3);margin:0">مرة يومياً</span>
+            </div>
+            <p style="font-size:.72rem;color:var(--text3);margin-top:4px">1 = إنجاز واحد كلاسيكي | أكثر = صناديق تكرار مرئية</p>
+          </div>
+          <div class="step-nav">
+            <button class="btn btn-secondary" onclick="goToStep(0)" style="flex:1">→ السابق</button>
+            <button class="btn btn-primary" onclick="goToStep(2)" style="flex:1">التالي ←</button>
+          </div>
+        </div>
+
+        <!-- Step 3: المظهر -->
+        <div class="modal-step" id="modal-step-2">
+          <div class="step-title-badge">3 — المظهر</div>
+          <div class="form-group">
+            <label class="form-label">الأيقونة</label>
+            <div class="emoji-picker" id="habit-emoji-picker"></div>
+            <input type="hidden" id="habit-emoji-input" value="📚">
+          </div>
+          <div class="form-group">
+            <label class="form-label">اللون</label>
+            <div class="color-picker" id="habit-color-picker"></div>
+            <input type="hidden" id="habit-color-input" value="#2D6A4F">
+          </div>
+          <div class="step-nav">
+            <button class="btn btn-secondary" onclick="goToStep(1)" style="flex:1">→ السابق</button>
+            <button class="btn btn-primary" onclick="saveHabit()" style="flex:1">💾 حفظ</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- REWARD MODAL -->
+<div class="modal-overlay" id="reward-modal"><div class="modal"><div class="modal-header"><h3>مكافأة جديدة</h3><button class="icon-btn" onclick="closeModal('reward-modal')" title="إغلاق">✕</button></div><div class="modal-body"><div class="form-group"><label class="form-label">الاسم</label><input class="form-input" id="reward-name-input" aria-label="اسم المكافأة"></div><div class="form-group"><label class="form-label">الأيقونة</label><input class="form-input" id="reward-emoji-input" value="🎁" aria-label="أيقونة المكافأة"></div><div class="form-group"><label class="form-label">التكلفة (نقاط)</label><input class="form-input" id="reward-cost-input" type="number" value="100" aria-label="تكلفة المكافأة"></div></div><div class="modal-footer"><button class="btn btn-primary" onclick="saveReward()">حفظ</button><button class="btn btn-secondary" onclick="closeModal('reward-modal')">إلغاء</button></div></div></div>
+
+<!-- SKIP MODAL -->
+<div class="modal-overlay" id="skip-modal"><div class="modal"><div class="modal-header"><h3>سبب التخطي</h3><button class="icon-btn" onclick="closeModal('skip-modal')" title="إغلاق">✕</button></div><div class="modal-body"><button class="missed-reason-btn" onclick="confirmSkip('مشغول جداً')">😰 مشغول</button><button class="missed-reason-btn" onclick="confirmSkip('مريض')">🤒 مريض</button><button class="missed-reason-btn" onclick="confirmSkip('نسيت')">😅 نسيت</button><button class="missed-reason-btn" onclick="confirmSkip('ظروف طارئة')">⚡ طارئ</button><button class="missed-reason-btn" onclick="confirmSkip('أخرى')">📝 آخر</button></div></div></div>
+
+<!-- SETTINGS MODAL -->
+<div class="modal-overlay" id="settings-modal"><div class="modal"><div class="modal-header"><h3>⚙️ الإعدادات المتقدمة</h3><button class="icon-btn" onclick="closeModal('settings-modal')" title="إغلاق">✕</button></div><div class="modal-body"><div class="form-group"><label class="form-label">وقت الإشعار اليومي</label><input type="time" id="notif-time" class="form-input" value="09:00" aria-label="وقت الإشعار"></div><button class="btn btn-secondary btn-full" id="request-notif-btn" style="margin-bottom:12px">🔔 تفعيل الإشعارات</button><button class="btn btn-primary btn-full" id="export-data-btn" style="margin-bottom:12px">📤 تصدير البيانات (JSON)</button><label for="import-file" class="btn btn-secondary btn-full" style="cursor:pointer;text-align:center">📥 استيراد بيانات</label><input type="file" id="import-file" accept=".json" style="display:none"><button class="btn btn-danger btn-full" id="reset-app-btn" style="margin-top:12px">⚠️ إعادة تعيين التطبيق بالكامل</button></div></div></div>
+
+<!-- MISSED MODAL -->
+<div class="modal-overlay" id="missed-modal"><div class="modal"><div class="modal-header"><h3>⚠️ عادات فائتة</h3><button class="icon-btn" onclick="closeModal('missed-modal')" title="إغلاق">✕</button></div><div class="modal-body"><p style="margin-bottom:16px">لديك عادات لم تُسجَّل بالأمس. الاستمرارية مهمة!</p><button class="btn btn-primary btn-full" onclick="closeModal('missed-modal')">حسناً، أكمل اليوم 💪</button></div></div></div>
+
+<div class="confetti-wrap" id="confetti-wrap"></div>
+<div class="toast" id="toast"></div>
+
+<script>
+// ============================================================
+//  PWA + Service Worker
+// ============================================================
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('/sw.js').catch(()=>{});
+  (function(){const manifest={name:"مسار - تتبع العادات",short_name:"مسار",start_url:".",display:"standalone",background_color:"#FDF8F0",theme_color:"#2D6A4F",icons:[{src:"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%232D6A4F'/%3E%3Ctext x='50' y='67' font-size='50' text-anchor='middle' fill='white' font-family='Arial'%3E⭐%3C/text%3E%3C/svg%3E",sizes:"any",type:"image/svg+xml"}]};const link=document.createElement('link');link.rel='manifest';link.href='data:application/manifest+json,'+encodeURIComponent(JSON.stringify(manifest));document.head.appendChild(link);})();
+}
+
+// ============================================================
+//  CONSTANTS
+// ============================================================
+const KEY='habitTracker_v2';
+let state=null;
+let currentSkipHabitId=null;
+let renderThrottle=null;
+let notificationTime='09:00';
+let notificationGranted=false;
+let currentModalStep=0;
+let currentPriority='medium';
+
+const EMOJIS=['📚','🏃','💧','🧘','✍️','🎯','🌙','☀️','🍎','💪','🧠','🎵','🎨','🏋️','🚶','🌿'];
+const COLORS=['#2D6A4F','#D4A017','#C0392B','#1A5276','#6C3483','#D35400','#1A7A4A','#784212'];
+const BADGES_DEF=[
+  {id:'first',name:'الأولى',emoji:'🌱',desc:'أكملت أول عادة'},
+  {id:'week7',name:'أسبوع صلب',emoji:'🔥',desc:'7 أيام متتالية'},
+  {id:'week30',name:'الصامد',emoji:'🏅',desc:'30 يوماً'},
+  {id:'perfect5',name:'المثالي',emoji:'💯',desc:'5 أيام مثالية'},
+  {id:'perfect10',name:'الأسطورة',emoji:'🦁',desc:'10 أيام مثالية'},
+  {id:'points500',name:'الثري',emoji:'💰',desc:'500 نقطة'},
+  {id:'points1000',name:'المليونير',emoji:'👑',desc:'1000 نقطة'},
+  {id:'habits5',name:'المنظّم',emoji:'📋',desc:'5 عادات'},
+  {id:'emergency',name:'المرن',emoji:'🆘',desc:'استخدم الطوارئ'},
+  {id:'noSkip7',name:'بلا عذر',emoji:'🎯',desc:'7 أيام بلا تخطي'},
+  {id:'weekChallenge',name:'بطل الأسبوع',emoji:'🏆',desc:'5 أيام مثالية في أسبوع'}
+];
+
+const GEMINI_SYSTEM_PROMPT = `أنت "زاد" — مساعد الإنتاجية الذكي لتطبيق مسار لتتبع العادات.
+مهمتك: مساعدة المستخدم على:
+١. اقتراح عادات يومية مفيدة وعملية
+٢. تقسيم الأهداف الكبيرة إلى خطوات صغيرة قابلة للتنفيذ
+٣. تقديم نصائح الإنتاجية بأسلوب ودي ومشجع
+٤. الإجابة على أسئلة حول بناء العادات بعلم وثقة
+قواعد:
+- تحدث دائماً بالعربية الفصحى البسيطة
+- اجعل ردودك موجزة (٣-٥ جمل كحد أقصى إلا عند الحاجة)
+- ابدأ أحياناً بعبارة تشجيعية قصيرة
+- إذا طُلب منك اقتراح عادات، قدّم ٣-٥ عادات على شكل قائمة مرقمة
+- لا تخرج عن موضوع الإنتاجية والعادات والتطوير الشخصي`;
+
+// ============================================================
+//  AI STATE
+// ============================================================
+
+
+// ============================================================
+//  POMODORO STATE (non-persisted)
+// ============================================================
+const pomodoroTimer = {
+  intervalId: null,
+  secondsLeft: 25 * 60,
+  mode: 'work',
+  sessionCount: 0,
+  isRunning: false
+};
+
+// ============================================================
+//  STATE MANAGEMENT
+// ============================================================
+function generateId(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
+function todayStr(){return new Date().toISOString().slice(0,10)}
+function getDay(offset=0){const d=new Date();d.setDate(d.getDate()+offset);return d.toISOString().slice(0,10)}
+
+// میگریشن: إضافة الحقول الجديدة بشكل آمن مع الحفاظ على البيانات القديمة
+function migrateState(s){
+  // ترقية habits بإضافة الحقول الجديدة
+  s.habits = (s.habits||[]).map(h=>({
+    notes:'',
+    repetitions:1,
+    priority:'medium',
+    ...h
+  }));
+  // ترقية الإعدادات
+  if(!s.settings) s.settings={theme:'light',emergencyModeActive:false,language:'ar'};
+  if(!s.settings.pomodoroSettings){
+    s.settings.pomodoroSettings={workDuration:25,breakDuration:5,longBreakDuration:15,sessionsBeforeLongBreak:4,soundEnabled:true};
+  }
+  // سجل المحادثات
+  if(!s.aiHistory) s.aiHistory=[];
+  if(!s.pointsHistory) s.pointsHistory=[];
+  // ترقية dailyLogs بإضافة repsCompleted
+  Object.values(s.dailyLogs||{}).forEach(log=>{
+    Object.keys(log.habits||{}).forEach(hid=>{
+      const entry=log.habits[hid];
+      if(entry.repsCompleted===undefined){
+        const habit=s.habits.find(h=>h.id===hid);
+        entry.repsCompleted = entry.status==='completed' ? (habit?.repetitions||1) : 0;
+      }
+    });
+  });
+  return s;
+}
+
+function loadState(){
+  try{const s=localStorage.getItem(KEY);if(s)return migrateState(JSON.parse(s));}catch(e){}
+  return null;
+}
+
+function saveState(){
+  try{localStorage.setItem(KEY,JSON.stringify(state));}
+  catch(e){showToast('❌ خطأ في الحفظ','error')}
+}
+
+function initDefaultState(name=''){
+  return {
+    user:{name,joinDate:todayStr(),totalPoints:0,level:1,openCount:0,notificationTime:'09:00'},
+    habits:[],
+    dailyLogs:{},
+    rewards:[],
+    badges:BADGES_DEF.map(b=>({...b,unlockedAt:null})),
+    settings:{
+      theme:'light',emergencyModeActive:false,language:'ar',
+      pomodoroSettings:{workDuration:25,breakDuration:5,longBreakDuration:15,sessionsBeforeLongBreak:4,soundEnabled:true}
+    },
+    pointsHistory:[],
+    aiHistory:[]
+  };
+}
+
+// ============================================================
+//  NOTIFICATIONS
+// ============================================================
+function requestNotificationPermission(){
+  if('Notification' in window){
+    Notification.requestPermission().then(perm=>{
+      notificationGranted=perm==='granted';
+      if(notificationGranted)scheduleDailyNotification();
+    });
+  }
+}
+function scheduleDailyNotification(){
+  if(!notificationGranted)return;
+  const now=new Date();
+  const [hour,minute]=notificationTime.split(':');
+  const target=new Date();
+  target.setHours(parseInt(hour),parseInt(minute),0,0);
+  if(target<=now)target.setDate(target.getDate()+1);
+  const timeout=target.getTime()-now.getTime();
+  setTimeout(()=>{
+    if(notificationGranted)new Notification('تذكير عاداتك اليومية 📋',{body:`حان وقت تسجيل عاداتك في ${notificationTime}`});
+    scheduleDailyNotification();
+  },timeout);
+}
+function showLocalNotification(title,body){
+  if(notificationGranted)new Notification(title,{body});
+}
+
+// ============================================================
+//  HELPERS
+// ============================================================
+function ensureToday(){
+  const t=todayStr();
+  if(!state.dailyLogs[t])state.dailyLogs[t]={habits:{},totalPoints:0,notes:'',perfectDay:false};
+  saveState();
+}
+
+function unlockBadge(id){
+  const badge=state.badges.find(b=>b.id===id);
+  if(badge&&!badge.unlockedAt){
+    badge.unlockedAt=new Date().toISOString();
+    saveState();
+    showToast(`🏅 شارة جديدة: ${badge.name}!`,'gold');
+    showLocalNotification('شارة جديدة!',`حصلت على شارة ${badge.name}`);
+  }
+}
+
+function checkBadges(log){
+  if(Object.values(log.habits||{}).some(e=>e.status==='completed'||e.status==='emergency'))unlockBadge('first');
+  if(log.perfectDay){
+    const perfectDays=Object.values(state.dailyLogs).filter(l=>l.perfectDay).length;
+    if(perfectDays>=5)unlockBadge('perfect5');
+    if(perfectDays>=10)unlockBadge('perfect10');
+  }
+  if(state.user.totalPoints>=500)unlockBadge('points500');
+  if(state.user.totalPoints>=1000)unlockBadge('points1000');
+  if(state.habits.length>=5)unlockBadge('habits5');
+  if(state.settings.emergencyModeActive)unlockBadge('emergency');
+  const weekPerfect=Object.entries(state.dailyLogs).slice(-7).filter(([,l])=>l.perfectDay).length;
+  if(weekPerfect>=5)unlockBadge('weekChallenge');
+  state.user.openCount=(state.user.openCount||0)+1;
+  if(state.user.openCount>=30)unlockBadge('early');
+  const newLevel=Math.floor(state.user.totalPoints/100)+1;
+  if(newLevel>state.user.level){
+    state.user.level=newLevel;
+    showToast(`🎊 مستوى جديد! المستوى ${newLevel}`,'gold');
+    showConfetti();
+    showLocalNotification('ترقية!',`وصلت إلى المستوى ${newLevel}`);
+  }
+  saveState();
+}
+
+function addBonusPoints(pts,desc){
+  state.user.totalPoints+=pts;
+  state.pointsHistory.unshift({date:todayStr(),desc,pts,type:'bonus'});
+  saveState();
+  showToast(`🎉 +${pts} نقطة إضافية — ${desc}`,'gold');
+}
+
+// ============================================================
+//  HABIT COMPLETION
+// ============================================================
+function completeHabit(habitId,status){
+  const today=todayStr();
+  if(!state.dailyLogs[today])state.dailyLogs[today]={habits:{},totalPoints:0,notes:'',perfectDay:false};
+  const log=state.dailyLogs[today];
+  if(log.habits[habitId])return;
+  const h=state.habits.find(x=>x.id===habitId);
+  if(!h)return;
+  const pts=status==='emergency'?5:10;
+  const reps=h.repetitions??1;
+  log.habits[habitId]={
+    status,
+    completedValue:status==='emergency'?h.miniTarget.value:h.target.value,
+    completedAt:new Date().toTimeString().slice(0,5),
+    isEmergencyMode:state.settings.emergencyModeActive,
+    reason:'',
+    repsCompleted:reps
+  };
+  log.totalPoints=(log.totalPoints||0)+pts;
+  state.user.totalPoints+=pts;
+  const yesterday=getDay(-1);
+  const yLog=state.dailyLogs[yesterday];
+  const yDone=yLog&&yLog.habits[habitId]&&(yLog.habits[habitId].status==='completed'||yLog.habits[habitId].status==='emergency');
+  if(yDone)h.streak++;else h.streak=1;
+  if(h.streak>h.longestStreak)h.longestStreak=h.streak;
+  state.pointsHistory.unshift({date:today,desc:`أكملت: ${h.name}`,pts,type:status});
+  saveState();
+  checkBadges(log);
+  renderThrottled();
+  if(h.streak===7){addBonusPoints(50,'سلسلة 7 أيام! 🔥');unlockBadge('week7');}
+  if(h.streak===30){addBonusPoints(200,'سلسلة 30 يوم! 🏅');unlockBadge('week30');}
+  const allDone=state.habits.every(hb=>{const e=state.dailyLogs[today].habits[hb.id];return e&&(e.status==='completed'||e.status==='emergency');});
+  if(allDone&&state.habits.length){
+    log.perfectDay=true;addBonusPoints(25,'يوم مثالي! 💯');showConfetti();showCompanionMsg('🎉 يوم مثالي! أنت أسطورة!');
+  }else showCompanionMsg('🌟 ممتاز! استمر');
+  showToast(`⭐ +${pts} نقطة — ${h.name}`,'gold');
+}
+
+// دالة إكمال تكرار واحد (Feature 2)
+function completeOneRep(habitId){
+  const today=todayStr();
+  const log=state.dailyLogs[today];
+  const h=state.habits.find(x=>x.id===habitId);
+  if(!h||!log)return;
+  if(!log.habits[habitId]){
+    log.habits[habitId]={status:'pending',repsCompleted:0,completedValue:0,completedAt:'',isEmergencyMode:false,reason:''};
+  }
+  const entry=log.habits[habitId];
+  if(entry.status==='completed')return;
+  entry.repsCompleted=(entry.repsCompleted||0)+1;
+  if(entry.repsCompleted>=(h.repetitions??1)){
+    completeHabit(habitId,'completed');
+  }else{
+    saveState();
+    renderThrottled();
+  }
+}
+
+function confirmSkip(reason){
+  if(!currentSkipHabitId)return;
+  const today=todayStr();
+  state.dailyLogs[today].habits[currentSkipHabitId]={status:'skipped',reason,completedAt:'',completedValue:0,repsCompleted:0};
+  const h=state.habits.find(x=>x.id===currentSkipHabitId);
+  if(h)h.streak=0;
+  saveState();renderThrottled();closeModal('skip-modal');showToast('⏭️ تم التخطي','info');
+}
+
+function openSkipModal(id){currentSkipHabitId=id;openModal('skip-modal');}
+
+function checkMissedHabits(){
+  const yesterday=getDay(-1);
+  const yLog=state.dailyLogs[yesterday];
+  if(!yLog)return;
+  const missed=state.habits.filter(h=>{const e=yLog.habits&&yLog.habits[h.id];return !e||e.status==='missed';});
+  if(missed.length)setTimeout(()=>openModal('missed-modal'),1200);
+}
+
+// ============================================================
+//  FEATURE 1 — NOTES PER HABIT
+// ============================================================
+let notesDebounceTimers={};
+
+function toggleNotesPanel(habitId){
+  const panel=document.getElementById(`notes-panel-${habitId}`);
+  if(panel)panel.classList.toggle('open');
+}
+
+function saveHabitNotes(habitId,value){
+  clearTimeout(notesDebounceTimers[habitId]);
+  notesDebounceTimers[habitId]=setTimeout(()=>{
+    const h=state.habits.find(x=>x.id===habitId);
+    if(!h)return;
+    h.notes=value;
+    saveState();
+    const btn=document.getElementById(`notes-toggle-${habitId}`);
+    if(btn)btn.classList.toggle('has-notes',value.trim().length>0);
+    const indicator=document.getElementById(`save-indicator-${habitId}`);
+    if(indicator){indicator.classList.add('show');setTimeout(()=>indicator.classList.remove('show'),1500);}
+  },500);
+}
+
+// ============================================================
+//  RENDER
+// ============================================================
+function renderThrottled(){
+  if(renderThrottle)clearTimeout(renderThrottle);
+  renderThrottle=setTimeout(()=>{render();renderThrottle=null;},50);
+}
+
+function render(){
+  if(!state)return;
+  ensureToday();
+  updateTopbar();
+  renderDashboard();
+  renderManageHabits();
+  renderRewards();
+  updateCompanion();
+  // لا نُعيد رسم Pomodoro هنا — حالة التايمر مستقلة
+}
+
+function updateTopbar(){
+  document.getElementById('points-num').textContent=state.user.totalPoints;
+  const em=document.getElementById('emergency-toggle');
+  if(state.settings.emergencyModeActive)em.classList.add('active');
+  else em.classList.remove('active');
+}
+
+function renderDashboard(){
+  const today=todayStr();
+  const log=state.dailyLogs[today];
+  const hh=new Date().getHours();
+  document.getElementById('greeting').textContent=`${hh<12?'صباح الخير':hh<17?'مساء الخير':'مساء الخير'}, ${state.user.name} 👋`;
+  const d=new Date();
+  document.getElementById('date-display').textContent=`${['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'][d.getDay()]}، ${d.getDate()}`;
+  const msgs=['كل يوم فرصة جديدة','الاستمرارية أقوى من الكمال','أنت تبني مستقبلك'];
+  document.getElementById('daily-msg').textContent=`"${msgs[d.getDate()%msgs.length]}"`;
+  const dailyH=state.habits.filter(h=>h.frequency==='daily');
+  const completed=dailyH.filter(h=>log.habits[h.id]&&(log.habits[h.id].status==='completed'||log.habits[h.id].status==='emergency')).length;
+  const pct=dailyH.length?Math.round(completed/dailyH.length*100):0;
+  const circ=175.9;
+  document.getElementById('ring-progress').style.strokeDashoffset=circ-(circ*pct/100);
+  document.getElementById('ring-pct').textContent=pct+'%';
+  const container=document.getElementById('habits-dashboard-list');
+  if(!state.habits.length){
+    container.innerHTML=`<div class="empty-state"><div class="empty-icon">🌱</div><p>لا توجد عادات</p><button class="btn btn-primary" onclick="showPage('habits');showAddHabitModal()">أضف أول عادة</button></div>`;
+    return;
+  }
+  container.innerHTML=state.habits.map(h=>{
+    const entry=log.habits[h.id];
+    const isDone=entry&&(entry.status==='completed'||entry.status==='emergency');
+    const isSkipped=entry&&entry.status==='skipped';
+    const em=state.settings.emergencyModeActive;
+    const reps=h.repetitions??1;
+    const repsCompleted=entry?.repsCompleted??0;
+    const priority=h.priority??'medium';
+    const priorityBadge=priority==='high'?'<span class="priority-badge" title="أولوية عالية">🔴</span>':priority==='low'?'<span class="priority-badge" title="أولوية منخفضة" style="opacity:.6">🟢</span>':'';
+
+    // منطق الأزرار
+    let actions='';
+    let repSection='';
+    if(isDone){
+      actions=`<button class="habit-btn done-state" disabled title="مكتملة">✅ مكتملة</button>`;
+    }else if(isSkipped){
+      actions=`<button class="habit-btn done-state" disabled title="تخطي">⏭️ تخطي</button>`;
+    }else if(reps>1){
+      // صناديق التكرار
+      const boxesHtml=reps<=10
+        ? Array.from({length:reps},(_,i)=>`<div class="rep-box ${i<repsCompleted?'filled':''}" onclick="${i>=repsCompleted?`completeOneRep('${h.id}')`:''}" title="${i<repsCompleted?'مكتمل':'انقر للتسجيل'}">${i<repsCompleted?'✓':''}</div>`).join('')
+        : `<span style="font-size:.85rem;font-weight:700">${reps} ×</span>`;
+      repSection=`<div style="margin-bottom:8px"><div class="rep-boxes">${boxesHtml}</div><div class="rep-progress-label">${repsCompleted}/${reps} مكتمل</div></div>`;
+      actions=`<button class="habit-btn skip" onclick="openSkipModal('${h.id}')" title="تخطي">⏭️ تخطي</button>`;
+    }else{
+      actions=`<button class="habit-btn complete" onclick="completeHabit('${h.id}','completed')" title="إكمال العادة">✅ مكتملة</button>${em?`<button class="habit-btn emergency-action" onclick="completeHabit('${h.id}','emergency')" title="طوارئ">⚡ طوارئ</button>`:''}<button class="habit-btn skip" onclick="openSkipModal('${h.id}')" title="تخطي">⏭️ تخطي</button>`;
+    }
+
+    const hasNotes=(h.notes||'').trim().length>0;
+
+    return `<div class="habit-card ${isDone?'completed':''}" style="--habit-color:${h.color}">
+      <div class="habit-header">
+        <div class="habit-emoji">${h.emoji}</div>
+        <div class="habit-info">
+          <div class="habit-name">${priorityBadge}${h.name}</div>
+          <div class="habit-meta">
+            <span>${em?h.miniTarget.value:h.target.value} ${(em?h.miniTarget.unit:h.target.unit)==='minutes'?'دقيقة':'مرة'}</span>
+            ${h.streak>0?`<span class="streak-badge">🔥 ${h.streak}</span>`:''}
+          </div>
+        </div>
+      </div>
+      <div class="habit-progress-bar"><div class="habit-progress-fill" style="width:${isDone?100:reps>1?Math.round(repsCompleted/reps*100):0}%"></div></div>
+      ${repSection}
+      <div class="habit-actions">${actions}</div>
+      <div class="habit-footer-row">
+        <button class="notes-toggle-btn ${hasNotes?'has-notes':''}" id="notes-toggle-${h.id}" onclick="toggleNotesPanel('${h.id}')" title="ملاحظات العادة" aria-label="ملاحظات">📝</button>
+        <span class="save-indicator" id="save-indicator-${h.id}">تم الحفظ ✓</span>
+      </div>
+      <div class="notes-panel" id="notes-panel-${h.id}">
+        <textarea class="form-input" rows="3" placeholder="أضف ملاحظاتك هنا..." dir="rtl"
+          style="font-size:.85rem;resize:none" aria-label="ملاحظات العادة"
+          oninput="saveHabitNotes('${h.id}',this.value)">${h.notes||''}</textarea>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderManageHabits(){
+  const container=document.getElementById('habits-manage-list');
+  if(!state.habits.length){container.innerHTML='<div class="empty-state"><div class="empty-icon">📋</div><p>أضف عاداتك</p></div>';return;}
+  container.innerHTML=state.habits.map(h=>`
+    <div class="habits-list-item">
+      <span style="font-size:1.3rem">${h.emoji}</span>
+      <div style="flex:1">
+        <div style="font-weight:700">${h.name}</div>
+        <div style="font-size:.72rem;color:var(--text3)">${h.type==='bad'?'🚫 تقليل':'✅ بناء'} · 🔥 ${h.streak} · ${h.repetitions>1?`${h.repetitions}× `:''} ${h.priority==='high'?'🔴':h.priority==='low'?'🟢':''}</div>
+      </div>
+      <div class="habits-list-actions">
+        <button class="small-action-btn" onclick="editHabit('${h.id}')" title="تعديل" aria-label="تعديل">✏️</button>
+        <button class="small-action-btn delete" onclick="deleteHabit('${h.id}')" title="حذف" aria-label="حذف">🗑️</button>
+      </div>
+    </div>`).join('');
+}
+
+function renderRewards(){
+  document.getElementById('reward-pts-display').textContent=state.user.totalPoints;
+  document.getElementById('reward-level').textContent=state.user.level;
+  const lvlPct=Math.min(100,(state.user.totalPoints%(state.user.level*100))/(state.user.level*100)*100);
+  document.getElementById('level-bar-fill').style.width=lvlPct+'%';
+  document.getElementById('badges-grid').innerHTML=state.badges.map(b=>`<div class="badge-item ${b.unlockedAt?'':'locked'}"><div class="badge-emoji">${b.emoji}</div><div class="badge-name">${b.name}</div><div class="badge-desc">${b.desc}</div>${b.unlockedAt?`<div style="font-size:.6rem;color:var(--text3)">${b.unlockedAt.slice(0,10)}</div>`:''}</div>`).join('');
+  const rl=document.getElementById('rewards-list');
+  if(!state.rewards.length)rl.innerHTML='<div class="empty-state"><div class="empty-icon">🎁</div><p>أضف مكافآت</p></div>';
+  else rl.innerHTML=state.rewards.map(r=>`<div class="reward-card"><div class="reward-emoji-big">${r.emoji}</div><div class="reward-info"><div style="font-weight:700">${r.name}</div><div class="reward-cost">⭐ ${r.cost}</div></div><button class="btn btn-primary" style="padding:6px 12px" onclick="redeemReward('${r.id}')">استبدل</button><button class="small-action-btn delete" onclick="deleteReward('${r.id}')" title="حذف">🗑️</button></div>`).join('');
+  const ph=document.getElementById('points-history-list');
+  if(!state.pointsHistory.length)ph.innerHTML='<div class="empty-state"><p>لا يوجد سجل</p></div>';
+  else ph.innerHTML=state.pointsHistory.slice(0,20).map(h=>`<div class="history-item"><div class="history-icon">${h.type==='bonus'?'🎉':'✅'}</div><div><div style="font-weight:600">${h.desc}</div><div style="font-size:.7rem;color:var(--text3)">${h.date}</div></div><div class="history-pts">+${h.pts}</div></div>`).join('');
+}
+
+function renderAnalytics(){
+  const allStreaks=state.habits.map(h=>h.longestStreak);
+  const perfectDays=Object.values(state.dailyLogs).filter(l=>l.perfectDay).length;
+  let bestHabit='-';
+  if(state.habits.length){let bestStreak=0;state.habits.forEach(h=>{if(h.streak>bestStreak){bestStreak=h.streak;bestHabit=h.name;}});}
+  document.getElementById('analytics-stats').innerHTML=`<div class="stat-card"><div class="stat-value">${allStreaks.length?Math.max(...allStreaks):0}</div><div class="stat-label">أطول سلسلة</div></div><div class="stat-card"><div class="stat-value">${perfectDays}</div><div class="stat-label">أيام مثالية</div></div><div class="stat-card"><div class="stat-value">${state.user.totalPoints}</div><div class="stat-label">إجمالي النقاط</div></div><div class="stat-card"><div class="stat-value">${state.user.level}</div><div class="stat-label">المستوى</div></div><div class="stat-card"><div class="stat-value">${Math.round((Object.values(state.dailyLogs).filter(l=>Object.values(l.habits||{}).some(e=>e.status==='completed')).length/(Object.keys(state.dailyLogs).length||1))*100)}%</div><div class="stat-label">نسبة النجاح</div></div><div class="stat-card"><div class="stat-value" style="font-size:1rem">${bestHabit}</div><div class="stat-label">العادة الأقوى</div></div>`;
+  const wb=document.getElementById('week-bars');
+  const days=['ح','ن','ث','ر','خ','ج','س'];
+  const weekData=[];
+  for(let i=6;i>=0;i--){const d=getDay(-i);const log=state.dailyLogs[d];const dailyH=state.habits.length||1;let done=0;if(log&&log.habits)done=Object.values(log.habits).filter(e=>e.status==='completed'||e.status==='emergency').length;weekData.push({day:days[new Date(d).getDay()],pct:Math.round(done/dailyH*100)});}
+  const maxPct=Math.max(...weekData.map(d=>d.pct),1);
+  wb.innerHTML=weekData.map(d=>`<div style="flex:1;text-align:center"><div style="font-size:.65rem">${d.pct}%</div><div class="week-bar ${d.pct===maxPct&&d.pct>0?'best':''}" style="height:${Math.max(4,d.pct/maxPct*80)}px"><span class="week-bar-label">${d.day}</span></div></div>`).join('');
+  drawHeatmap();drawPointsChart();renderInsights();
+}
+
+function drawHeatmap(){
+  const container=document.getElementById('heatmap-container');
+  const days=[];
+  for(let i=89;i>=0;i--){const date=getDay(-i);const log=state.dailyLogs[date];let intensity=0;if(log){const habits=state.habits.length||1;const done=Object.values(log.habits||{}).filter(e=>e.status==='completed'||e.status==='emergency').length;intensity=Math.floor((done/habits)*4);}days.push({date,intensity});}
+  container.innerHTML=days.map(d=>`<div class="heatmap-day" data-intensity="${d.intensity}" title="${d.date}"></div>`).join('');
+}
+
+function drawPointsChart(){
+  const canvas=document.getElementById('points-chart');
+  const ctx=canvas.getContext('2d');
+  canvas.width=canvas.offsetWidth||320;canvas.height=120;
+  const logs=Object.entries(state.dailyLogs).sort((a,b)=>a[0].localeCompare(b[0])).slice(-14);
+  if(!logs.length)return;
+  const pts=logs.map(([,l])=>l.totalPoints||0);
+  const maxP=Math.max(...pts,1);const w=canvas.width,h=canvas.height,pad=20;
+  ctx.clearRect(0,0,w,h);
+  const step=(w-pad*2)/(pts.length-1||1);
+  const green=getComputedStyle(document.documentElement).getPropertyValue('--green').trim()||'#2D6A4F';
+  ctx.beginPath();ctx.strokeStyle=green;ctx.lineWidth=2.5;
+  pts.forEach((p,i)=>{const x=pad+i*step;const y=h-pad-(p/maxP)*(h-pad*2);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);});
+  ctx.stroke();
+  ctx.fillStyle=green+'33';ctx.beginPath();
+  pts.forEach((p,i)=>{const x=pad+i*step;const y=h-pad-(p/maxP)*(h-pad*2);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);});
+  ctx.lineTo(pad+(pts.length-1)*step,h-pad);ctx.lineTo(pad,h-pad);ctx.fill();
+  pts.forEach((p,i)=>{const x=pad+i*step;const y=h-pad-(p/maxP)*(h-pad*2);ctx.beginPath();ctx.arc(x,y,3.5,0,Math.PI*2);ctx.fillStyle=green;ctx.fill();});
+}
+
+function renderInsights(){
+  document.getElementById('insights-section').innerHTML='<div class="insight-card"><div class="insight-icon">💡</div><div class="insight-text">استمر في تسجيل عاداتك لتحصل على تحليلات أعمق.</div></div>';
+}
+
+// ============================================================
+//  COMPANION
+// ============================================================
+function showCompanionMsg(msg){const bubble=document.getElementById('companion-bubble');bubble.textContent=msg;bubble.classList.add('show');setTimeout(()=>bubble.classList.remove('show'),4000);}
+function updateCompanion(){document.getElementById('zad-mouth').setAttribute('d','M24 27 Q30 32 36 27');}
+function companionClick(){showCompanionMsg('أنت رائع! استمر 🔥');}
+
+// ============================================================
+//  FEATURE 3 — HABIT MODAL STEPS
+// ============================================================
+function goToStep(n){
+  if(n===1){
+    const name=document.getElementById('habit-name-input').value.trim();
+    if(!name){
+      const inp=document.getElementById('habit-name-input');
+      inp.classList.add('shake');setTimeout(()=>inp.classList.remove('shake'),400);
+      inp.style.borderColor='var(--red)';setTimeout(()=>inp.style.borderColor='',800);
+      showToast('أدخل اسم العادة أولاً','info');return;
+    }
+  }
+  document.getElementById(`modal-step-${currentModalStep}`).classList.remove('active');
+  document.getElementById(`sdot-${currentModalStep}`).classList.remove('active');
+  currentModalStep=n;
+  document.getElementById(`modal-step-${n}`).classList.add('active');
+  document.getElementById(`sdot-${n}`).classList.add('active');
+}
+
+function selectPriority(p){
+  currentPriority=p;
+  document.getElementById('habit-priority-input').value=p;
+  ['high','medium','low'].forEach(x=>{
+    const btn=document.getElementById(`prio-${x}`);
+    btn.className='priority-pill';
+    if(x===p)btn.classList.add(`active-${x}`);
+  });
+}
+
+function updateCharCounter(len){
+  const el=document.getElementById('char-counter');
+  if(el){el.textContent=`${len} / 50`;el.classList.toggle('warn',len>40);}
+}
+
+function toggleOptionalNotes(){
+  const area=document.getElementById('optional-notes-area');
+  if(area)area.classList.toggle('open');
+}
+
+// ============================================================
+//  HABIT CRUD
+// ============================================================
+function saveHabit(){
+  const name=document.getElementById('habit-name-input').value.trim();
+  if(!name){showToast('أدخل الاسم','info');return;}
+  const id=document.getElementById('edit-habit-id').value;
+  const data={
+    name,
+    type:document.getElementById('habit-type-input').value,
+    emoji:document.getElementById('habit-emoji-input')?.value||'⭐',
+    color:document.getElementById('habit-color-input')?.value||'#2D6A4F',
+    target:{value:parseInt(document.getElementById('habit-target-input').value)||1,unit:document.getElementById('habit-unit-input').value},
+    miniTarget:{value:parseInt(document.getElementById('habit-mini-input').value)||1,unit:document.getElementById('habit-mini-unit-input').value},
+    frequency:'daily',
+    repetitions:Math.min(50,Math.max(1,parseInt(document.getElementById('habit-reps-input').value)||1)),
+    priority:document.getElementById('habit-priority-input').value||'medium',
+    notes:''
+  };
+  if(id){
+    const idx=state.habits.findIndex(x=>x.id===id);
+    if(idx>-1){
+      // حفظ الملاحظات الموجودة عند التعديل
+      data.notes=state.habits[idx].notes||'';
+      state.habits[idx]={...state.habits[idx],...data};
+    }
+  }else{
+    state.habits.push({...data,id:generateId(),createdAt:todayStr(),streak:0,longestStreak:0});
+  }
+  saveState();renderThrottled();closeModal('habit-modal');
+  showToast(`${id?'تم التعديل':'تمت الإضافة'}`,'success');
+}
+
+function deleteHabit(id){
+  if(confirm('حذف العادة نهائياً؟')){
+    state.habits=state.habits.filter(x=>x.id!==id);
+    saveState();renderThrottled();showToast('تم الحذف','info');
+  }
+}
+
+function editHabit(id){
+  const h=state.habits.find(x=>x.id===id);
+  if(!h)return;
+  currentModalStep=0;
+  document.querySelectorAll('.modal-step').forEach((s,i)=>{s.classList.toggle('active',i===0);});
+  document.querySelectorAll('[id^=sdot-]').forEach((d,i)=>{d.classList.toggle('active',i===0);});
+  document.getElementById('edit-habit-id').value=id;
+  document.getElementById('habit-name-input').value=h.name;
+  updateCharCounter(h.name.length);
+  document.getElementById('habit-type-input').value=h.type;
+  document.getElementById('habit-target-input').value=h.target.value;
+  document.getElementById('habit-unit-input').value=h.target.unit;
+  document.getElementById('habit-mini-input').value=h.miniTarget.value;
+  document.getElementById('habit-mini-unit-input').value=h.miniTarget.unit;
+  document.getElementById('habit-reps-input').value=h.repetitions??1;
+  document.getElementById('habit-emoji-input').value=h.emoji;
+  document.getElementById('habit-color-input').value=h.color;
+  selectPriority(h.priority||'medium');
+  buildEmojiPicker();buildColorPicker();
+  openModal('habit-modal');
+}
+
+function showAddHabitModal(){
+  currentModalStep=0;
+  document.querySelectorAll('.modal-step').forEach((s,i)=>{s.classList.toggle('active',i===0);});
+  document.querySelectorAll('[id^=sdot-]').forEach((d,i)=>{d.classList.toggle('active',i===0);});
+  document.getElementById('edit-habit-id').value='';
+  document.getElementById('habit-name-input').value='';
+  updateCharCounter(0);
+  document.getElementById('habit-type-input').value='good';
+  document.getElementById('habit-target-input').value='1';
+  document.getElementById('habit-unit-input').value='times';
+  document.getElementById('habit-mini-input').value='1';
+  document.getElementById('habit-mini-unit-input').value='times';
+  document.getElementById('habit-reps-input').value='1';
+  document.getElementById('habit-emoji-input').value='📚';
+  document.getElementById('habit-color-input').value='#2D6A4F';
+  selectPriority('medium');
+  buildEmojiPicker();buildColorPicker();
+  openModal('habit-modal');
+}
+
+function buildEmojiPicker(){
+  const container=document.getElementById('habit-emoji-picker');
+  if(!container)return;
+  const current=document.getElementById('habit-emoji-input').value;
+  container.innerHTML='';
+  EMOJIS.forEach(e=>{
+    const btn=document.createElement('button');
+    btn.type='button';
+    btn.className='emoji-opt'+(e===current?' selected':'');
+    btn.textContent=e;
+    btn.onclick=()=>{
+      container.querySelectorAll('.emoji-opt').forEach(b=>b.classList.remove('selected'));
+      btn.classList.add('selected');
+      document.getElementById('habit-emoji-input').value=e;
+    };
+    container.appendChild(btn);
+  });
+}
+
+function buildColorPicker(){
+  const picker=document.getElementById('habit-color-picker');
+  if(!picker)return;
+  const current=document.getElementById('habit-color-input').value;
+  picker.innerHTML='';
+  COLORS.forEach(c=>{
+    const d=document.createElement('div');
+    d.className='color-opt'+(c===current?' selected':'');
+    d.style.background=c;
+    d.title=c;
+    d.onclick=()=>{
+      picker.querySelectorAll('.color-opt').forEach(x=>x.classList.remove('selected'));
+      d.classList.add('selected');
+      document.getElementById('habit-color-input').value=c;
+    };
+    picker.appendChild(d);
+  });
+}
+
+// ============================================================
+//  REWARDS
+// ============================================================
+function saveReward(){
+  const name=document.getElementById('reward-name-input').value.trim();
+  if(!name)return;
+  state.rewards.push({id:generateId(),name,emoji:document.getElementById('reward-emoji-input').value||'🎁',cost:parseInt(document.getElementById('reward-cost-input').value)||100,redeemedCount:0});
+  saveState();renderThrottled();closeModal('reward-modal');
+}
+
+function deleteReward(id){
+  if(confirm('حذف المكافأة؟')){state.rewards=state.rewards.filter(x=>x.id!==id);saveState();renderThrottled();}
+}
+
+function redeemReward(id){
+  const r=state.rewards.find(x=>x.id===id);
+  if(!r)return;
+  if(state.user.totalPoints<r.cost){showToast('نقاط غير كافية','info');return;}
+  if(confirm(`استبدال "${r.name}" بـ ${r.cost} نقطة؟`)){
+    state.user.totalPoints-=r.cost;r.redeemedCount++;
+    state.pointsHistory.unshift({date:todayStr(),desc:`استبدل: ${r.name}`,pts:-r.cost,type:'redeem'});
+    saveState();renderThrottled();showConfetti();showToast(`🎉 استمتع بـ ${r.name}!`,'gold');
+  }
+}
+
+function showConfetti(){
+  const wrap=document.getElementById('confetti-wrap');
+  wrap.innerHTML='';
+  for(let i=0;i<40;i++){
+    const p=document.createElement('div');
+    p.className='confetti-piece';
+    p.style.cssText=`left:${Math.random()*100}%;background:${COLORS[Math.floor(Math.random()*COLORS.length)]};animation:confettiFall ${1+Math.random()*2}s linear forwards;`;
+    wrap.appendChild(p);
+  }
+  setTimeout(()=>wrap.innerHTML='',3000);
+}
+
+// ============================================================
+//  DATA IMPORT / EXPORT
+// ============================================================
+function exportData(){
+  const dataStr=JSON.stringify(state,null,2);
+  const blob=new Blob([dataStr],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');a.href=url;a.download=`habit-tracker-backup-${todayStr()}.json`;a.click();URL.revokeObjectURL(url);
+  showToast('تم تصدير البيانات','success');
+}
+
+function importData(file){
+  const reader=new FileReader();
+  reader.onload=e=>{
+    try{
+      const imported=JSON.parse(e.target.result);
+      if(imported.habits&&imported.user){state=migrateState(imported);saveState();renderThrottled();showToast('تم استيراد البيانات بنجاح','success');}
+      else throw new Error();
+    }catch(err){showToast('ملف غير صالح','error');}
+  };
+  reader.readAsText(file);
+}
+
+function resetApp(){
+  if(confirm('⚠️ سيتم مسح كل البيانات نهائياً. هل أنت متأكد؟')){localStorage.removeItem(KEY);location.reload();}
+}
+
+// ============================================================
+//  UI HELPERS
+// ============================================================
+function openModal(id){document.getElementById(id).classList.add('open');}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+
+let toastTimer=null;
+function showToast(msg,type='info'){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.className=`toast ${type} show`;
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+function showPage(page){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.getElementById(`page-${page}`).classList.add('active');
+  document.getElementById(`nav-${page}`).classList.add('active');
+  if(page==='analytics')renderAnalytics();
+  if(page==='pomodoro'){
+    // تهيئة عرض الداشبورد داخل pomodoro
+    updatePomodoroDisplay();updatePomodoroUI();
+  }
+  if(page==='ai'&&!localStorage.getItem('massar_gemini_key')){
+    setTimeout(()=>showGeminiKeyPrompt(),300);
+  }
+}
+
+function toggleTheme(){
+  if(!state)return;
+  state.settings.theme=state.settings.theme==='dark'?'light':'dark';
+  document.documentElement.setAttribute('data-theme',state.settings.theme);
+  document.getElementById('theme-btn').textContent=state.settings.theme==='dark'?'☀️':'🌙';
+  saveState();
+}
+
+function toggleEmergency(){
+  state.settings.emergencyModeActive=!state.settings.emergencyModeActive;
+  saveState();renderThrottled();
+  showToast(state.settings.emergencyModeActive?'🆘 وضع الطوارئ مفعل':'✅ وضع الطوارئ معطل','info');
+}
+
+function applyTheme(){
+  const t=state?.settings?.theme||'light';
+  document.documentElement.setAttribute('data-theme',t);
+  document.getElementById('theme-btn').textContent=t==='dark'?'☀️':'🌙';
+}
+
+// ============================================================
+//  FEATURE 4 — POMODORO TIMER
+// ============================================================
+function getPomodoroSeconds(mode){
+  const s=state.settings.pomodoroSettings;
+  if(mode==='work')return s.workDuration*60;
+  if(mode==='break')return s.breakDuration*60;
+  return s.longBreakDuration*60;
+}
+
+function pomodoroStart(){
+  if(pomodoroTimer.isRunning)return;
+  pomodoroTimer.isRunning=true;
+  pomodoroTimer.intervalId=setInterval(()=>{
+    pomodoroTimer.secondsLeft--;
+    updatePomodoroDisplay();
+    if(pomodoroTimer.secondsLeft<=0)pomodoroAutoSwitch();
+  },1000);
+  updatePomodoroUI();
+}
+
+function pomodoroPause(){
+  clearInterval(pomodoroTimer.intervalId);
+  pomodoroTimer.isRunning=false;
+  updatePomodoroUI();
+  document.title='مسار';
+}
+
+function pomodoroReset(){
+  pomodoroPause();
+  pomodoroTimer.secondsLeft=getPomodoroSeconds(pomodoroTimer.mode);
+  updatePomodoroDisplay();
+}
+
+function pomodoroAutoSwitch(){
+  pomodoroPause();
+  pomodoroPlaySound();
+  if(pomodoroTimer.mode==='work'){
+    pomodoroTimer.sessionCount++;
+    pomodoroTimer.mode=(pomodoroTimer.sessionCount%state.settings.pomodoroSettings.sessionsBeforeLongBreak===0)?'longBreak':'break';
+  }else{
+    pomodoroTimer.mode='work';
+  }
+  pomodoroTimer.secondsLeft=getPomodoroSeconds(pomodoroTimer.mode);
+  updatePomodoroDisplay();updatePomodoroUI();
+  pomodoroStart();
+}
+
+function updatePomodoroDisplay(){
+  const m=String(Math.floor(pomodoroTimer.secondsLeft/60)).padStart(2,'0');
+  const s=String(pomodoroTimer.secondsLeft%60).padStart(2,'0');
+  const el=document.getElementById('pomodoro-time');
+  if(el)el.textContent=`${m}:${s}`;
+  const ring=document.getElementById('pomodoro-ring');
+  if(ring){
+    const total=getPomodoroSeconds(pomodoroTimer.mode);
+    const pct=pomodoroTimer.secondsLeft/total;
+    const circ=2*Math.PI*54;
+    ring.style.strokeDashoffset=circ*pct;
+  }
+  document.title=pomodoroTimer.isRunning?`${m}:${s} — مسار`:'مسار';
+}
+
+function pomodoroPlaySound(){
+  try{
+    if(!state.settings.pomodoroSettings.soundEnabled)return;
+    const ctx=new(window.AudioContext||window.webkitAudioContext)();
+    const osc=ctx.createOscillator();
+    const gain=ctx.createGain();
+    osc.connect(gain);gain.connect(ctx.destination);
+    osc.frequency.value=880;
+    gain.gain.setValueAtTime(0.3,ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.8);
+    osc.start(ctx.currentTime);osc.stop(ctx.currentTime+0.8);
+  }catch(e){}
+}
+
+function pomodoroToggle(){
+  pomodoroTimer.isRunning?pomodoroPause():pomodoroStart();
+}
+
+function pomodoroSkipSession(){pomodoroAutoSwitch();}
+
+function updatePomodoroSettings(){
+  const work=parseInt(document.getElementById('pomo-work-input').value)||25;
+  const brk=parseInt(document.getElementById('pomo-break-input').value)||5;
+  state.settings.pomodoroSettings.workDuration=work;
+  state.settings.pomodoroSettings.breakDuration=brk;
+  saveState();
+  if(!pomodoroTimer.isRunning){
+    pomodoroTimer.secondsLeft=getPomodoroSeconds(pomodoroTimer.mode);
+    updatePomodoroDisplay();
+  }
+}
+
+function updatePomodoroUI(){
+  const btn=document.getElementById('pomodoro-main-btn');
+  if(!btn)return;
+  btn.textContent=pomodoroTimer.isRunning?'⏸️ إيقاف مؤقت':'▶️ ابدأ';
+  const modeLabel=document.getElementById('pomodoro-mode-label');
+  if(modeLabel){
+    const modeMap={work:{text:'⚡ وقت التركيز',cls:''},break:{text:'☕ وقت الراحة',cls:'break'},longBreak:{text:'🛌 راحة طويلة',cls:'longBreak'}};
+    modeLabel.textContent=modeMap[pomodoroTimer.mode].text;
+    modeLabel.className='pomodoro-mode-label '+modeMap[pomodoroTimer.mode].cls;
+  }
+  const dotsContainer=document.getElementById('pomodoro-session-dots');
+  if(!dotsContainer)return;
+  const total=state.settings.pomodoroSettings.sessionsBeforeLongBreak;
+  const currentInCycle=pomodoroTimer.sessionCount%total;
+  dotsContainer.innerHTML=Array.from({length:total},(_,i)=>{
+    let cls='session-dot';
+    if(i<currentInCycle)cls+=' done';
+    else if(i===currentInCycle&&pomodoroTimer.mode==='work')cls+=' current';
+    return `<div class="${cls}" title="جلسة ${i+1}"></div>`;
+  }).join('');
+}
+
+// إيقاف التايمر عند إخفاء التبويب
+document.addEventListener('visibilitychange',()=>{
+  if(document.hidden&&pomodoroTimer.isRunning){
+    // نحتفظ بالوقت دون إيقاف التايمر
+  }
+});
+
+// ============================================================
+//  FEATURE 5 — GEMINI AI ASSISTANT
+// ============================================================
+
+
+// --- إعدادات النظام والذكاء الاصطناعي ---
+const aiState = {
+    messages: [],
+    isLoading: false,
+    sendLock: false,
+    // المعلومات الخاصة بمشروعك من جوجل
+    apiKey: "AIzaSyDEQXUYVVIU2Yt1hojJKC8LiHO8wp7AlUo",
+    projectNumber: "532269150823",
+    modelName: "gemini-2.5-flash" 
+};
+
+// --- وظائف الواجهة (UI) ---
+
+function renderAiMessages() {
+    const container = document.getElementById('ai-messages-list');
+    if (!container) return;
+
+    if (aiState.messages.length === 0 && !aiState.isLoading) {
+        container.innerHTML = `
+            <div class="ai-welcome">
+                <div style="font-size:2.5rem;margin-bottom:10px">🤖</div>
+                <div style="font-weight:800;font-size:1.2rem;color:var(--primary)">مرحباً! أنا زاد</div>
+                <p style="color:var(--text3);font-size:0.9rem">كيف يمكنني مساعدتك في تنظيم يومك اليوم؟</p>
+                <div class="ai-suggestions">
+                    ${['جدول دراسي مقترح', 'كيف أتخلص من التسويف؟', 'نصيحة لزيادة التركيز'].map(s => 
+                        `<button class="ai-suggestion-chip" onclick="aiQuickSend('${s}')">${s}</button>`
+                    ).join('')}
+                </div>
+            </div>`;
+        return;
+    }
+
+    let html = aiState.messages.map(m => `
+        <div class="ai-msg ai-msg--${m.role === 'user' ? 'user' : 'assistant'}">
+            ${m.role !== 'user' ? '<div class="ai-avatar">🤖</div>' : ''}
+            <div class="ai-bubble">${formatText(m.text)}</div>
+            ${m.role === 'user' ? '<div class="ai-avatar ai-avatar--user">👤</div>' : ''}
+        </div>`).join('');
+
+    if (aiState.isLoading) {
+        html += `<div class="ai-msg ai-msg--assistant"><div class="ai-avatar">🤖</div><div class="ai-bubble ai-typing"><span></span><span></span><span></span></div></div>`;
+    }
+
+    container.innerHTML = html;
+    scrollAiToBottom();
+}
+
+function formatText(text) {
+    return text
+        .replace(/\n/g, '<br>')
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // تحويل النص العريض
+        .replace(/^\s*[\-\*]\s+(.*)$/gm, '• $1'); // تحويل القوائم النقطية
+}
+
+function scrollAiToBottom() {
+    const container = document.getElementById('ai-messages-list');
+    if (container) container.scrollTop = container.scrollHeight;
+}
+
+// --- وظائف الاتصال بـ API ---
+
+async function sendToGemini(userMessage) {
+    if (!aiState.apiKey) {
+        console.error("API Key is missing!");
+        return;
+    }
+
+    aiState.isLoading = true;
+    renderAiMessages();
+
+    // تجهيز تاريخ المحادثة ليرسله للـ API (Context)
+    const contents = [
+        { role: 'user', parts: [{ text: `تعليمات النظام: ${GEMINI_SYSTEM_PROMPT}` }] },
+        { role: 'model', parts: [{ text: "فهمت، أنا زاد جاهز لمساعدتك." }] }
+    ];
+
+    // إضافة الرسائل السابقة (بحد أقصى آخر 6 رسائل لتوفير الاستهلاك)
+    aiState.messages.slice(-6).forEach(m => {
+        contents.push({
+            role: m.role === 'user' ? 'user' : 'model',
+            parts: [{ text: m.text }]
+        });
+    });
+
+    try {
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${aiState.modelName}:generateContent?key=${aiState.apiKey}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                contents: contents,
+                generationConfig: {
+                    temperature: 0.7,
+                    maxOutputTokens: 1000,
+                }
+            })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.error?.message || "خطأ في الاتصال بالسيرفر");
+        }
+
+        const replyText = data.candidates?.[0]?.content?.parts?.[0]?.text || "عذراً، لم أستطع توليد رد حالياً.";
+        
+        aiState.messages.push({ role: 'model', text: replyText });
+
+        // حفظ السجل إذا كان لديك نظام حفظ محلي
+        if (typeof saveState === 'function') saveState();
+
+    } catch (err) {
+        aiState.messages.push({ 
+            role: 'model', 
+            text: `❌ خطأ تقني: ${err.message}. يرجى التحقق من اتصالك بالإنترنت.` 
+        });
+    } finally {
+        aiState.isLoading = false;
+        aiState.sendLock = false;
+        renderAiMessages();
+    }
+}
+
+// --- وظائف التحكم في الإرسال ---
+
+function aiSubmit() {
+    if (aiState.sendLock) return;
+    
+    const input = document.getElementById('ai-input');
+    const text = (input.value || '').trim();
+    
+    if (!text) return;
+
+    aiState.sendLock = true;
+    aiState.messages.push({ role: 'user', text: text });
+    
+    input.value = '';
+    input.style.height = 'auto';
+    
+    renderAiMessages();
+    sendToGemini(text);
+}
+
+function aiQuickSend(text) {
+    if (aiState.sendLock) return;
+    
+    aiState.sendLock = true;
+    aiState.messages.push({ role: 'user', text: text });
+    
+    renderAiMessages();
+    sendToGemini(text);
+}
+
+// تفريغ الشات
+function clearAiHistory() {
+    aiState.messages = [];
+    renderAiMessages();
+}
+
+
+
+// ============================================================
+//  INITIALIZATION
+// ============================================================
+document.addEventListener('DOMContentLoaded',()=>{
+  state=loadState();
+  if(!state){state=initDefaultState('');saveState();}
+  else{
+    // ترقية حقول المستخدم القديمة
+    if(!state.user.notificationTime)state.user.notificationTime='09:00';
+    if(!state.badges.some(b=>b.id==='weekChallenge'))state.badges.push({id:'weekChallenge',name:'بطل الأسبوع',emoji:'🏆',desc:'5 أيام مثالية',unlockedAt:null});
+    saveState();
+  }
+
+  applyTheme();
+  ensureToday();
+  checkMissedHabits();
+  renderThrottled();
+  setInterval(()=>renderThrottled(),60000);
+
+  // أزرار الإعدادات
+  document.getElementById('theme-btn').onclick=toggleTheme;
+  document.getElementById('emergency-toggle').onclick=toggleEmergency;
+  document.getElementById('settings-btn').onclick=()=>openModal('settings-modal');
+  document.getElementById('export-data-btn').onclick=exportData;
+  document.getElementById('reset-app-btn').onclick=resetApp;
+  document.getElementById('request-notif-btn').onclick=()=>{
+    requestNotificationPermission();
+    const time=document.getElementById('notif-time').value;
+    if(time){state.user.notificationTime=time;notificationTime=time;saveState();scheduleDailyNotification();}
+  };
+  document.getElementById('import-file').onchange=e=>{if(e.target.files[0])importData(e.target.files[0]);};
+  document.getElementById('companion-body').onclick=companionClick;
+
+  buildEmojiPicker();buildColorPicker();
+
+  if('Notification' in window&&Notification.permission==='default'){
+    setTimeout(()=>requestNotificationPermission(),5000);
+  }
+
+  // === تهيئة Pomodoro ===
+  if(!state.settings.pomodoroSettings){
+    state.settings.pomodoroSettings={workDuration:25,breakDuration:5,longBreakDuration:15,sessionsBeforeLongBreak:4,soundEnabled:true};
+    saveState();
+  }
+  const circ=2*Math.PI*54;
+  const ring=document.getElementById('pomodoro-ring');
+  if(ring){ring.style.strokeDasharray=circ;ring.style.strokeDashoffset=0;}
+  updatePomodoroDisplay();updatePomodoroUI();
+
+  // مزامنة إعدادات Pomodoro مع الحقول
+  document.getElementById('pomo-work-input').value=state.settings.pomodoroSettings.workDuration;
+  document.getElementById('pomo-break-input').value=state.settings.pomodoroSettings.breakDuration;
+  document.getElementById('pomo-sound-toggle').checked=state.settings.pomodoroSettings.soundEnabled;
+
+  // === تهيئة AI ===
+  if(state.aiHistory&&state.aiHistory.length){
+    aiState.messages=[...state.aiHistory];
+  }
+  renderAiMessages();
+});
+
+// ============================================================
+//  WINDOW EXPORTS
+// ============================================================
+window.showPage=showPage;
+window.completeHabit=completeHabit;
+window.completeOneRep=completeOneRep;
+window.openSkipModal=openSkipModal;
+window.confirmSkip=confirmSkip;
+window.showAddHabitModal=showAddHabitModal;
+window.saveHabit=saveHabit;
+window.editHabit=editHabit;
+window.deleteHabit=deleteHabit;
+window.showAddRewardModal=()=>openModal('reward-modal');
+window.saveReward=saveReward;
+window.deleteReward=deleteReward;
+window.redeemReward=redeemReward;
+window.closeModal=closeModal;
+window.toggleNotesPanel=toggleNotesPanel;
+window.saveHabitNotes=saveHabitNotes;
+window.pomodoroToggle=pomodoroToggle;
+window.pomodoroReset=pomodoroReset;
+window.pomodoroSkipSession=pomodoroSkipSession;
+window.updatePomodoroSettings=updatePomodoroSettings;
+window.aiSubmit=aiSubmit;
+window.aiQuickSend=aiQuickSend;
+window.saveGeminiKey=saveGeminiKey;
+window.clearAiHistory=clearAiHistory;
+window.showGeminiKeyPrompt=showGeminiKeyPrompt;
+window.goToStep=goToStep;
+window.selectPriority=selectPriority;
+window.updateCharCounter=updateCharCounter;
+window.toggleOptionalNotes=toggleOptionalNotes;
+</script>
+</body>
+</html>
