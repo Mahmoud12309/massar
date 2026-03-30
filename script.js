@@ -48,11 +48,6 @@ const GEMINI_SYSTEM_PROMPT = `أنت "زاد" — مساعد الإنتاجية 
 - لا تخرج عن موضوع الإنتاجية والعادات والتطوير الشخصي`;
 
 // ============================================================
-//  AI STATE
-// ============================================================
-
-
-// ============================================================
 //  POMODORO STATE (non-persisted)
 // ============================================================
 const pomodoroTimer = {
@@ -64,30 +59,36 @@ const pomodoroTimer = {
 };
 
 // ============================================================
+//  AI STATE  ✅ بدون مفتاح في الكود
+// ============================================================
+const aiState = {
+  messages: [],
+  isLoading: false,
+  sendLock: false,
+  apiKey: null,          // ✅ يُحمَّل من localStorage فقط — لا مفتاح هنا
+  modelName: 'gemini-2.5-flash'
+};
+
+// ============================================================
 //  STATE MANAGEMENT
 // ============================================================
 function generateId(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
 function todayStr(){return new Date().toISOString().slice(0,10)}
 function getDay(offset=0){const d=new Date();d.setDate(d.getDate()+offset);return d.toISOString().slice(0,10)}
 
-// میگریشن: إضافة الحقول الجديدة بشكل آمن مع الحفاظ على البيانات القديمة
 function migrateState(s){
-  // ترقية habits بإضافة الحقول الجديدة
   s.habits = (s.habits||[]).map(h=>({
     notes:'',
     repetitions:1,
     priority:'medium',
     ...h
   }));
-  // ترقية الإعدادات
   if(!s.settings) s.settings={theme:'light',emergencyModeActive:false,language:'ar'};
   if(!s.settings.pomodoroSettings){
     s.settings.pomodoroSettings={workDuration:25,breakDuration:5,longBreakDuration:15,sessionsBeforeLongBreak:4,soundEnabled:true};
   }
-  // سجل المحادثات
   if(!s.aiHistory) s.aiHistory=[];
   if(!s.pointsHistory) s.pointsHistory=[];
-  // ترقية dailyLogs بإضافة repsCompleted
   Object.values(s.dailyLogs||{}).forEach(log=>{
     Object.keys(log.habits||{}).forEach(hid=>{
       const entry=log.habits[hid];
@@ -124,6 +125,65 @@ function initDefaultState(name=''){
     pointsHistory:[],
     aiHistory:[]
   };
+}
+
+// ============================================================
+//  🔑 GEMINI KEY MANAGEMENT  ✅ نظام المفتاح الآمن
+// ============================================================
+
+/** تحميل المفتاح من localStorage عند بدء التطبيق */
+function loadGeminiKey(){
+  const stored = localStorage.getItem('massar_gemini_key');
+  if(stored){
+    try{
+      aiState.apiKey = atob(stored);
+    }catch(e){
+      // المفتاح تالف — احذفه وابدأ من جديد
+      localStorage.removeItem('massar_gemini_key');
+      aiState.apiKey = null;
+    }
+  }
+}
+
+/** حفظ المفتاح الجديد بعد التحقق منه */
+function saveGeminiKey(){
+  const input = document.getElementById('ai-key-input');
+  const key = (input ? input.value : '').trim();
+
+  // التحقق البسيط من صيغة المفتاح
+  if(!key || !key.startsWith('AIza') || key.length < 30){
+    showToast('❌ مفتاح غير صالح — يجب أن يبدأ بـ AIza','error');
+    return;
+  }
+
+  // حفظ مُشفَّر بـ base64 (يحمي من القراءة العرضية)
+  localStorage.setItem('massar_gemini_key', btoa(key));
+  aiState.apiKey = key;
+
+  // إخفاء الـ overlay وإظهار رسالة نجاح
+  const overlay = document.getElementById('ai-key-overlay');
+  if(overlay) overlay.style.display = 'none';
+  showToast('✅ تم حفظ مفتاح Gemini بنجاح','success');
+  renderAiMessages();
+}
+
+/** إظهار نافذة إدخال المفتاح */
+function showGeminiKeyPrompt(){
+  const overlay = document.getElementById('ai-key-overlay');
+  if(overlay){
+    // إذا كان المفتاح موجوداً نظهر رسالة تغيير بدلاً من الإخفاء
+    overlay.style.display = 'flex';
+    const input = document.getElementById('ai-key-input');
+    if(input) input.value = '';
+  }
+}
+
+/** حذف المفتاح الحالي (لتغييره) */
+function deleteGeminiKey(){
+  localStorage.removeItem('massar_gemini_key');
+  aiState.apiKey = null;
+  showToast('🗑️ تم حذف المفتاح','info');
+  showGeminiKeyPrompt();
 }
 
 // ============================================================
@@ -245,7 +305,6 @@ function completeHabit(habitId,status){
   showToast(`⭐ +${pts} نقطة — ${h.name}`,'gold');
 }
 
-// دالة إكمال تكرار واحد (Feature 2)
 function completeOneRep(habitId){
   const today=todayStr();
   const log=state.dailyLogs[today];
@@ -324,7 +383,6 @@ function render(){
   renderManageHabits();
   renderRewards();
   updateCompanion();
-  // لا نُعيد رسم Pomodoro هنا — حالة التايمر مستقلة
 }
 
 function updateTopbar(){
@@ -364,7 +422,6 @@ function renderDashboard(){
     const priority=h.priority??'medium';
     const priorityBadge=priority==='high'?'<span class="priority-badge" title="أولوية عالية">🔴</span>':priority==='low'?'<span class="priority-badge" title="أولوية منخفضة" style="opacity:.6">🟢</span>':'';
 
-    // منطق الأزرار
     let actions='';
     let repSection='';
     if(isDone){
@@ -372,7 +429,6 @@ function renderDashboard(){
     }else if(isSkipped){
       actions=`<button class="habit-btn done-state" disabled title="تخطي">⏭️ تخطي</button>`;
     }else if(reps>1){
-      // صناديق التكرار
       const boxesHtml=reps<=10
         ? Array.from({length:reps},(_,i)=>`<div class="rep-box ${i<repsCompleted?'filled':''}" onclick="${i>=repsCompleted?`completeOneRep('${h.id}')`:''}" title="${i<repsCompleted?'مكتمل':'انقر للتسجيل'}">${i<repsCompleted?'✓':''}</div>`).join('')
         : `<span style="font-size:.85rem;font-weight:700">${reps} ×</span>`;
@@ -557,7 +613,6 @@ function saveHabit(){
   if(id){
     const idx=state.habits.findIndex(x=>x.id===id);
     if(idx>-1){
-      // حفظ الملاحظات الموجودة عند التعديل
       data.notes=state.habits[idx].notes||'';
       state.habits[idx]={...state.habits[idx],...data};
     }
@@ -740,11 +795,16 @@ function showPage(page){
   document.getElementById(`nav-${page}`).classList.add('active');
   if(page==='analytics')renderAnalytics();
   if(page==='pomodoro'){
-    // تهيئة عرض الداشبورد داخل pomodoro
     updatePomodoroDisplay();updatePomodoroUI();
   }
-  if(page==='ai'&&!localStorage.getItem('massar_gemini_key')){
-    setTimeout(()=>showGeminiKeyPrompt(),300);
+  // ✅ عند فتح صفحة AI: إذا لا يوجد مفتاح أظهر نافذة الإدخال
+  if(page==='ai'){
+    if(!aiState.apiKey){
+      setTimeout(()=>showGeminiKeyPrompt(),300);
+    } else {
+      const overlay = document.getElementById('ai-key-overlay');
+      if(overlay) overlay.style.display = 'none';
+    }
   }
 }
 
@@ -885,7 +945,6 @@ function updatePomodoroUI(){
   }).join('');
 }
 
-// إيقاف التايمر عند إخفاء التبويب
 document.addEventListener('visibilitychange',()=>{
   if(document.hidden&&pomodoroTimer.isRunning){
     // نحتفظ بالوقت دون إيقاف التايمر
@@ -896,166 +955,171 @@ document.addEventListener('visibilitychange',()=>{
 //  FEATURE 5 — GEMINI AI ASSISTANT
 // ============================================================
 
+function renderAiMessages(){
+  const container=document.getElementById('ai-messages-list');
+  if(!container)return;
 
-// --- إعدادات النظام والذكاء الاصطناعي ---
-const aiState = {
-    messages: [],
-    isLoading: false,
-    sendLock: false,
-    // المعلومات الخاصة بمشروعك من جوجل
-    apiKey: "AIzaSyAcu9AvcNsL2vQRIYy-DaDDRHHl--SCnBA",
-    projectNumber: "532269150823",
-    modelName: "gemini-2.5-flash" 
-};
+  if(aiState.messages.length===0&&!aiState.isLoading){
+    container.innerHTML=`
+      <div class="ai-welcome">
+        <div style="font-size:2.5rem;margin-bottom:10px">🤖</div>
+        <div style="font-weight:800;font-size:1.2rem;color:var(--primary)">مرحباً! أنا زاد</div>
+        <p style="color:var(--text3);font-size:0.9rem">كيف يمكنني مساعدتك في تنظيم يومك اليوم؟</p>
+        <div class="ai-suggestions">
+          ${['جدول دراسي مقترح','كيف أتخلص من التسويف؟','نصيحة لزيادة التركيز'].map(s=>
+            `<button class="ai-suggestion-chip" onclick="aiQuickSend('${s}')">${s}</button>`
+          ).join('')}
+        </div>
+      </div>`;
+    return;
+  }
 
-// --- وظائف الواجهة (UI) ---
+  let html=aiState.messages.map(m=>`
+    <div class="ai-msg ai-msg--${m.role==='user'?'user':'assistant'}">
+      ${m.role!=='user'?'<div class="ai-avatar">🤖</div>':''}
+      <div class="ai-bubble">${formatText(m.text)}</div>
+      ${m.role==='user'?'<div class="ai-avatar ai-avatar--user">👤</div>':''}
+    </div>`).join('');
 
-function renderAiMessages() {
-    const container = document.getElementById('ai-messages-list');
-    if (!container) return;
+  if(aiState.isLoading){
+    html+=`<div class="ai-msg ai-msg--assistant"><div class="ai-avatar">🤖</div><div class="ai-bubble ai-typing"><span></span><span></span><span></span></div></div>`;
+  }
 
-    if (aiState.messages.length === 0 && !aiState.isLoading) {
-        container.innerHTML = `
-            <div class="ai-welcome">
-                <div style="font-size:2.5rem;margin-bottom:10px">🤖</div>
-                <div style="font-weight:800;font-size:1.2rem;color:var(--primary)">مرحباً! أنا زاد</div>
-                <p style="color:var(--text3);font-size:0.9rem">كيف يمكنني مساعدتك في تنظيم يومك اليوم؟</p>
-                <div class="ai-suggestions">
-                    ${['جدول دراسي مقترح', 'كيف أتخلص من التسويف؟', 'نصيحة لزيادة التركيز'].map(s => 
-                        `<button class="ai-suggestion-chip" onclick="aiQuickSend('${s}')">${s}</button>`
-                    ).join('')}
-                </div>
-            </div>`;
-        return;
-    }
-
-    let html = aiState.messages.map(m => `
-        <div class="ai-msg ai-msg--${m.role === 'user' ? 'user' : 'assistant'}">
-            ${m.role !== 'user' ? '<div class="ai-avatar">🤖</div>' : ''}
-            <div class="ai-bubble">${formatText(m.text)}</div>
-            ${m.role === 'user' ? '<div class="ai-avatar ai-avatar--user">👤</div>' : ''}
-        </div>`).join('');
-
-    if (aiState.isLoading) {
-        html += `<div class="ai-msg ai-msg--assistant"><div class="ai-avatar">🤖</div><div class="ai-bubble ai-typing"><span></span><span></span><span></span></div></div>`;
-    }
-
-    container.innerHTML = html;
-    scrollAiToBottom();
+  container.innerHTML=html;
+  scrollAiToBottom();
 }
 
-function formatText(text) {
-    return text
-        .replace(/\n/g, '<br>')
-        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // تحويل النص العريض
-        .replace(/^\s*[\-\*]\s+(.*)$/gm, '• $1'); // تحويل القوائم النقطية
+function formatText(text){
+  return text
+    .replace(/\n/g,'<br>')
+    .replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')
+    .replace(/^\s*[\-\*]\s+(.*)$/gm,'• $1');
 }
 
-function scrollAiToBottom() {
-    const container = document.getElementById('ai-messages-list');
-    if (container) container.scrollTop = container.scrollHeight;
+function scrollAiToBottom(){
+  const container=document.getElementById('ai-messages-list');
+  if(container)container.scrollTop=container.scrollHeight;
 }
 
-// --- وظائف الاتصال بـ API ---
+async function sendToGemini(userMessage){
+  // ✅ تحقق من وجود المفتاح قبل الإرسال
+  if(!aiState.apiKey){
+    aiState.isLoading=false;
+    aiState.sendLock=false;
+    showGeminiKeyPrompt();
+    showToast('أدخل مفتاح Gemini أولاً 🔑','info');
+    return;
+  }
 
-async function sendToGemini(userMessage) {
-    if (!aiState.apiKey) {
-        console.error("API Key is missing!");
-        return;
-    }
+  aiState.isLoading=true;
+  renderAiMessages();
 
-    aiState.isLoading = true;
-    renderAiMessages();
+  const contents=[
+    {role:'user',parts:[{text:`تعليمات النظام: ${GEMINI_SYSTEM_PROMPT}`}]},
+    {role:'model',parts:[{text:'فهمت، أنا زاد جاهز لمساعدتك.'}]}
+  ];
 
-    // تجهيز تاريخ المحادثة ليرسله للـ API (Context)
-    const contents = [
-        { role: 'user', parts: [{ text: `تعليمات النظام: ${GEMINI_SYSTEM_PROMPT}` }] },
-        { role: 'model', parts: [{ text: "فهمت، أنا زاد جاهز لمساعدتك." }] }
-    ];
-
-    // إضافة الرسائل السابقة (بحد أقصى آخر 6 رسائل لتوفير الاستهلاك)
-    aiState.messages.slice(-6).forEach(m => {
-        contents.push({
-            role: m.role === 'user' ? 'user' : 'model',
-            parts: [{ text: m.text }]
-        });
+  aiState.messages.slice(-6).forEach(m=>{
+    contents.push({
+      role:m.role==='user'?'user':'model',
+      parts:[{text:m.text}]
     });
+  });
 
-    try {
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${aiState.modelName}:generateContent?key=${aiState.apiKey}`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ 
-                contents: contents,
-                generationConfig: {
-                    temperature: 0.7,
-                    maxOutputTokens: 1000,
-                }
-            })
+  try{
+    const response=await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/${aiState.modelName}:generateContent?key=${aiState.apiKey}`,
+      {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({
+          contents,
+          generationConfig:{temperature:0.7,maxOutputTokens:1000}
+        })
+      }
+    );
+
+    const data=await response.json();
+
+    if(!response.ok){
+      const errMsg=data.error?.message||'خطأ غير معروف';
+
+      // ✅ كشف تلقائي لأخطاء المفتاح وإظهار نافذة التغيير
+      if(errMsg.includes('API key') || errMsg.includes('expired') ||
+         errMsg.includes('leaked') || errMsg.includes('invalid')){
+        // احذف المفتاح التالف
+        localStorage.removeItem('massar_gemini_key');
+        aiState.apiKey=null;
+        aiState.messages.push({
+          role:'model',
+          text:'🔑 انتهت صلاحية مفتاح Gemini أو أنه غير صالح. أدخل مفتاحاً جديداً من Google AI Studio.'
         });
-
-        const data = await response.json();
-
-        if (!response.ok) {
-            throw new Error(data.error?.message || "خطأ في الاتصال بالسيرفر");
-        }
-
-        const replyText = data.candidates?.[0]?.content?.parts?.[0]?.text || "عذراً، لم أستطع توليد رد حالياً.";
-        
-        aiState.messages.push({ role: 'model', text: replyText });
-
-        // حفظ السجل إذا كان لديك نظام حفظ محلي
-        if (typeof saveState === 'function') saveState();
-
-    } catch (err) {
-        aiState.messages.push({ 
-            role: 'model', 
-            text: `❌ خطأ تقني: ${err.message}. يرجى التحقق من اتصالك بالإنترنت.` 
-        });
-    } finally {
-        aiState.isLoading = false;
-        aiState.sendLock = false;
         renderAiMessages();
+        setTimeout(()=>showGeminiKeyPrompt(),1000);
+        return;
+      }
+
+      throw new Error(errMsg);
     }
-}
 
-// --- وظائف التحكم في الإرسال ---
+    const replyText=data.candidates?.[0]?.content?.parts?.[0]?.text||'عذراً، لم أستطع توليد رد حالياً.';
+    aiState.messages.push({role:'model',text:replyText});
+    if(typeof saveState==='function') saveState();
 
-function aiSubmit() {
-    if (aiState.sendLock) return;
-    
-    const input = document.getElementById('ai-input');
-    const text = (input.value || '').trim();
-    
-    if (!text) return;
-
-    aiState.sendLock = true;
-    aiState.messages.push({ role: 'user', text: text });
-    
-    input.value = '';
-    input.style.height = 'auto';
-    
+  }catch(err){
+    aiState.messages.push({
+      role:'model',
+      text:`❌ خطأ تقني: ${err.message}. تحقق من اتصالك بالإنترنت أو أعد إدخال المفتاح.`
+    });
+  }finally{
+    aiState.isLoading=false;
+    aiState.sendLock=false;
     renderAiMessages();
-    sendToGemini(text);
+  }
 }
 
-function aiQuickSend(text) {
-    if (aiState.sendLock) return;
-    
-    aiState.sendLock = true;
-    aiState.messages.push({ role: 'user', text: text });
-    
-    renderAiMessages();
-    sendToGemini(text);
+function aiSubmit(){
+  if(aiState.sendLock)return;
+
+  // ✅ تحقق من المفتاح قبل أي شيء
+  if(!aiState.apiKey){
+    showGeminiKeyPrompt();
+    showToast('أدخل مفتاح Gemini أولاً 🔑','info');
+    return;
+  }
+
+  const input=document.getElementById('ai-input');
+  const text=(input.value||'').trim();
+  if(!text)return;
+
+  aiState.sendLock=true;
+  aiState.messages.push({role:'user',text});
+  input.value='';
+  input.style.height='auto';
+  renderAiMessages();
+  sendToGemini(text);
 }
 
-// تفريغ الشات
-function clearAiHistory() {
-    aiState.messages = [];
-    renderAiMessages();
+function aiQuickSend(text){
+  if(aiState.sendLock)return;
+
+  // ✅ تحقق من المفتاح
+  if(!aiState.apiKey){
+    showGeminiKeyPrompt();
+    showToast('أدخل مفتاح Gemini أولاً 🔑','info');
+    return;
+  }
+
+  aiState.sendLock=true;
+  aiState.messages.push({role:'user',text});
+  renderAiMessages();
+  sendToGemini(text);
 }
 
-
+function clearAiHistory(){
+  aiState.messages=[];
+  renderAiMessages();
+}
 
 // ============================================================
 //  INITIALIZATION
@@ -1064,7 +1128,6 @@ document.addEventListener('DOMContentLoaded',()=>{
   state=loadState();
   if(!state){state=initDefaultState('');saveState();}
   else{
-    // ترقية حقول المستخدم القديمة
     if(!state.user.notificationTime)state.user.notificationTime='09:00';
     if(!state.badges.some(b=>b.id==='weekChallenge'))state.badges.push({id:'weekChallenge',name:'بطل الأسبوع',emoji:'🏆',desc:'5 أيام مثالية',unlockedAt:null});
     saveState();
@@ -1106,12 +1169,13 @@ document.addEventListener('DOMContentLoaded',()=>{
   if(ring){ring.style.strokeDasharray=circ;ring.style.strokeDashoffset=0;}
   updatePomodoroDisplay();updatePomodoroUI();
 
-  // مزامنة إعدادات Pomodoro مع الحقول
   document.getElementById('pomo-work-input').value=state.settings.pomodoroSettings.workDuration;
   document.getElementById('pomo-break-input').value=state.settings.pomodoroSettings.breakDuration;
   document.getElementById('pomo-sound-toggle').checked=state.settings.pomodoroSettings.soundEnabled;
 
-  // === تهيئة AI ===
+  // === ✅ تهيئة AI — تحميل المفتاح من localStorage ===
+  loadGeminiKey();   // ← هذا هو السطر المهم
+
   if(state.aiHistory&&state.aiHistory.length){
     aiState.messages=[...state.aiHistory];
   }
@@ -1144,6 +1208,7 @@ window.updatePomodoroSettings=updatePomodoroSettings;
 window.aiSubmit=aiSubmit;
 window.aiQuickSend=aiQuickSend;
 window.saveGeminiKey=saveGeminiKey;
+window.deleteGeminiKey=deleteGeminiKey;
 window.clearAiHistory=clearAiHistory;
 window.showGeminiKeyPrompt=showGeminiKeyPrompt;
 window.goToStep=goToStep;
