@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>مسار — تتبع عاداتك الذكي | نسخة احترافية</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app" id="app">
+  <header class="topbar" id="topbar">
+    <div class="topbar-logo">مسار<span>.</span></div>
+    <div class="topbar-actions">
+      <div class="points-badge">⭐ <span id="points-num">0</span></div>
+      <button class="icon-btn" id="settings-btn" title="الإعدادات" aria-label="الإعدادات">⚙️</button>
+      <button class="emergency-btn" id="emergency-toggle">🆘 طوارئ</button>
+      <button class="icon-btn" id="theme-btn" title="تغيير المظهر" aria-label="تغيير المظهر">🌙</button>
+    </div>
+  </header>
+
+  <div class="main-content">
+    <!-- DASHBOARD -->
+    <div class="page active" id="page-dashboard">
+      <div class="dash-header">
+        <div><h2 id="greeting">مرحباً 👋</h2><div id="date-display" style="font-size:.8rem;color:var(--text3)"></div></div>
+        <div class="progress-ring-wrap">
+          <svg width="70" height="70" viewBox="0 0 70 70">
+            <circle cx="35" cy="35" r="28" fill="none" stroke="var(--bg3)" stroke-width="7"/>
+            <circle id="ring-progress" cx="35" cy="35" r="28" fill="none" stroke="var(--green)" stroke-width="7" stroke-dasharray="175.9" stroke-dashoffset="175.9" stroke-linecap="round" transform="rotate(-90 35 35)" style="transition:stroke-dashoffset .6s cubic-bezier(.34,1.56,.64,1)"/>
+          </svg>
+          <div class="ring-label"><span id="ring-pct">0%</span></div>
+        </div>
+      </div>
+      <div class="motivational-msg" id="daily-msg">جاري التحميل...</div>
+      <div class="section-title">العادات اليومية</div>
+      <div id="habits-dashboard-list"></div>
+    </div>
+
+    <!-- HABITS -->
+    <div class="page" id="page-habits">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px"><h2>عاداتي</h2><button class="btn btn-primary" onclick="showAddHabitModal()">+ إضافة عادة</button></div>
+      <div id="habits-manage-list"></div>
+    </div>
+
+    <!-- REWARDS -->
+    <div class="page" id="page-rewards">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px"><h2>المكافآت 🏆</h2><button class="btn btn-primary" onclick="showAddRewardModal()" style="font-size:.85rem;padding:8px 14px">+ مكافأة</button></div>
+      <div class="card" style="text-align:center;margin-bottom:20px"><div style="font-size:2.5rem;font-weight:900;color:var(--gold)" id="reward-pts-display">0</div><div style="font-size:.82rem;color:var(--text3);margin-bottom:10px">نقطة متاحة</div><div style="font-size:.78rem;color:var(--text2)">المستوى <strong id="reward-level">1</strong></div><div class="level-bar-wrap" style="margin-top:8px"><div class="level-bar-fill" id="level-bar-fill" style="width:0%"></div></div></div>
+      <div class="section-title">شاراتي</div><div class="badges-grid" id="badges-grid"></div>
+      <div class="section-title">مكافآتي</div><div id="rewards-list"></div>
+      <div class="section-title">سجل النقاط</div><div class="card" id="points-history-list" style="padding:8px 16px"></div>
+    </div>
+
+    <!-- ANALYTICS -->
+    <div class="page" id="page-analytics">
+      <h2 style="margin-bottom:20px">التحليلات 📊</h2>
+      <div class="stats-grid" id="analytics-stats"></div>
+      <div class="card"><div class="section-title">خريطة التقدم (آخر 90 يوم)</div><div id="heatmap-container" class="heatmap-container"></div></div>
+      <div class="chart-wrap"><div class="chart-title">أداء الأسبوع الحالي</div><div class="week-bars" id="week-bars"></div><div style="height:26px"></div></div>
+      <div id="insights-section"></div>
+      <div class="chart-wrap"><div class="chart-title">نقاط الأسابيع الأخيرة</div><canvas id="points-chart" height="120"></canvas></div>
+    </div>
+
+    <!-- POMODORO (Feature 4) -->
+    <div class="page" id="page-pomodoro">
+      <div style="max-width:400px;margin:0 auto;text-align:center;padding:10px 0">
+        <div id="pomodoro-mode-label" class="pomodoro-mode-label">⚡ وقت التركيز</div>
+        <div id="pomodoro-session-dots" class="pomodoro-session-dots"></div>
+        <div class="pomodoro-ring-wrap">
+          <svg viewBox="0 0 120 120" width="220" height="220">
+            <circle cx="60" cy="60" r="54" fill="none" stroke="var(--bg3)" stroke-width="8"/>
+            <circle id="pomodoro-ring" cx="60" cy="60" r="54" fill="none"
+                    stroke="var(--green)" stroke-width="8" stroke-linecap="round"
+                    transform="rotate(-90 60 60)"
+                    style="transition:stroke-dashoffset 1s linear;"/>
+          </svg>
+          <div class="pomodoro-time-overlay">
+            <div id="pomodoro-time" class="pomodoro-digits">25:00</div>
+            <div id="pomodoro-sub" style="font-size:.75rem;color:var(--text3)">دقيقة</div>
+          </div>
+        </div>
+        <div class="pomodoro-controls">
+          <button class="btn btn-secondary" onclick="pomodoroReset()" title="إعادة تعيين">🔄 إعادة</button>
+          <button id="pomodoro-main-btn" class="btn btn-primary" onclick="pomodoroToggle()" title="ابدأ/أوقف">▶️ ابدأ</button>
+          <button class="btn btn-secondary" onclick="pomodoroSkipSession()" title="تخطي الجلسة">⏭️ تخطي</button>
+        </div>
+        <div class="card" style="margin-top:24px;text-align:right">
+          <div class="section-title">إعدادات الجلسة</div>
+          <div class="form-row" style="margin-bottom:12px">
+            <div class="form-group" style="margin:0">
+              <label class="form-label">وقت التركيز (دقيقة)</label>
+              <input type="number" id="pomo-work-input" class="form-input" min="1" max="90" value="25" onchange="updatePomodoroSettings()" aria-label="مدة التركيز">
+            </div>
+            <div class="form-group" style="margin:0">
+              <label class="form-label">وقت الراحة (دقيقة)</label>
+              <input type="number" id="pomo-break-input" class="form-input" min="1" max="30" value="5" onchange="updatePomodoroSettings()" aria-label="مدة الراحة">
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <label class="form-label" style="margin:0">تنبيه صوتي</label>
+            <label class="toggle-switch">
+              <input type="checkbox" id="pomo-sound-toggle" checked onchange="state.settings.pomodoroSettings.soundEnabled=this.checked;saveState()" aria-label="تنبيه صوتي">
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI ASSISTANT (Feature 5) -->
+    <div class="page" id="page-ai">
+      <!-- API Key Setup Overlay -->
+      <div id="ai-key-overlay" class="ai-key-overlay" style="display:none">
+        <div class="card" style="max-width:380px;width:100%;margin:0 20px">
+          <div style="font-size:1.8rem;text-align:center;margin-bottom:8px">🔑</div>
+          <h3 style="text-align:center;margin-bottom:8px">ربط Gemini AI</h3>
+          <p style="font-size:.82rem;color:var(--text3);margin-bottom:16px;text-align:center">
+            أدخل مفتاح Google Gemini API للحصول على مساعد ذكاء اصطناعي مجاناً.
+            <br><a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener" style="color:var(--blue-light)">احصل على مفتاح مجاني هنا ↗</a>
+          </p>
+          <div class="form-group">
+            <input type="password" id="ai-key-input" class="form-input" placeholder="AIza..." dir="ltr" aria-label="مفتاح Gemini API">
+          </div>
+          <button class="btn btn-primary btn-full" onclick="saveGeminiKey()">حفظ وتفعيل</button>
+          <button class="btn btn-secondary btn-full" style="margin-top:8px" onclick="document.getElementById('ai-key-overlay').style.display='none'">لاحقاً</button>
+        </div>
+      </div>
+
+      <!-- Chat Header -->
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+        <div>
+          <h2 style="font-size:1.1rem">🤖 مساعد زاد</h2>
+          <div style="font-size:.72rem;color:var(--text3)">مدعوم بـ Google Gemini</div>
+        </div>
+        <div style="display:flex;gap:8px">
+          <button class="icon-btn" onclick="clearAiHistory()" title="مسح المحادثة" aria-label="مسح المحادثة">🗑️</button>
+          <button class="icon-btn" onclick="showGeminiKeyPrompt()" title="تغيير المفتاح" aria-label="تغيير مفتاح API">🔑</button>
+        </div>
+      </div>
+
+      <!-- Messages -->
+      <div id="ai-messages-list" class="ai-messages-list" aria-label="محادثة مع المساعد"></div>
+
+      <!-- Input -->
+      <div class="ai-input-bar">
+        <textarea id="ai-input" class="ai-textarea"
+                  placeholder="اسألني عن عاداتك وأهدافك..."
+                  rows="1" dir="rtl" aria-label="رسالتك للمساعد"
+                  onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();aiSubmit()}"
+                  oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,120)+'px'">
+        </textarea>
+        <button class="btn btn-primary" onclick="aiSubmit()" style="padding:10px 16px;flex-shrink:0" title="إرسال">إرسال ←</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6-item bottom nav -->
+  <nav class="bottom-nav">
+    <button class="nav-item active" id="nav-dashboard" onclick="showPage('dashboard')"><span class="nav-icon">🏠</span><span>الرئيسية</span></button>
+    <button class="nav-item" id="nav-habits"    onclick="showPage('habits')"><span class="nav-icon">✅</span><span>العادات</span></button>
+    <button class="nav-item" id="nav-rewards"   onclick="showPage('rewards')"><span class="nav-icon">🏆</span><span>جوائز</span></button>
+    <button class="nav-item" id="nav-analytics" onclick="showPage('analytics')"><span class="nav-icon">📊</span><span>تحليل</span></button>
+    <button class="nav-item" id="nav-pomodoro"  onclick="showPage('pomodoro')"><span class="nav-icon">⏱️</span><span>فوكس</span></button>
+    <button class="nav-item" id="nav-ai"        onclick="showPage('ai')"><span class="nav-icon">🤖</span><span>زاد</span></button>
+  </nav>
+
+  <!-- Companion -->
+  <div class="companion-wrap"><div class="companion-bubble" id="companion-bubble"></div><div class="companion-body" id="companion-body"><svg class="zad-svg" viewBox="0 0 60 60"><ellipse cx="30" cy="38" rx="16" ry="14" fill="var(--green)" stroke="var(--border)" stroke-width="2"/><circle cx="30" cy="22" r="14" fill="var(--green-light)" stroke="var(--border)" stroke-width="2"/><ellipse cx="24" cy="21" rx="3" ry="3.5" fill="var(--border)"/><ellipse cx="36" cy="21" rx="3" ry="3.5" fill="var(--border)"/><circle cx="24.5" cy="21.5" r="1.5" fill="#fff"/><circle cx="36.5" cy="21.5" r="1.5" fill="#fff"/><path id="zad-mouth" d="M24 27 Q30 32 36 27" fill="none" stroke="var(--border)" stroke-width="2" stroke-linecap="round"/><ellipse cx="12" cy="38" rx="5" ry="8" fill="var(--green)" stroke="var(--border)" stroke-width="1.5" transform="rotate(-20 12 38)"/><ellipse cx="48" cy="38" rx="5" ry="8" fill="var(--green)" stroke="var(--border)" stroke-width="1.5" transform="rotate(20 48 38)"/><circle cx="20" cy="26" r="4" fill="var(--red-light)" opacity=".35"/><circle cx="40" cy="26" r="4" fill="var(--red-light)" opacity=".35"/></svg></div></div>
+</div>
+
+<!-- ===== MODALS ===== -->
+
+<!-- HABIT MODAL — 3-step (Feature 3) -->
+<div class="modal-overlay" id="habit-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="habit-modal-title">إضافة عادة</h3>
+      <button class="icon-btn" onclick="closeModal('habit-modal')" title="إغلاق" aria-label="إغلاق">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="edit-habit-id">
+      <!-- Step dots -->
+      <div class="step-indicator">
+        <div class="step-dot active" id="sdot-0"></div>
+        <div class="step-dot" id="sdot-1"></div>
+        <div class="step-dot" id="sdot-2"></div>
+      </div>
+      <div class="modal-steps">
+        <!-- Step 1: الأساسيات -->
+        <div class="modal-step active" id="modal-step-0">
+          <div class="step-title-badge">1 — الأساسيات</div>
+          <div class="form-group">
+            <label class="form-label">اسم العادة</label>
+            <input class="form-input" id="habit-name-input" maxlength="50" placeholder="مثال: القراءة اليومية" autofocus oninput="updateCharCounter(this.value.length)" aria-label="اسم العادة">
+            <div class="char-counter" id="char-counter">0 / 50</div>
+          </div>
+          <div class="form-group">
+            <button class="optional-notes-toggle" type="button" onclick="toggleOptionalNotes()" title="ملاحظات اختيارية">أضف ملاحظات اختيارية ▾</button>
+            <div class="optional-notes-area" id="optional-notes-area">
+              <textarea class="form-input" id="habit-base-notes-input" rows="2" placeholder="ملاحظات عامة عن هذه العادة..." dir="rtl" aria-label="ملاحظات العادة"></textarea>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">الأولوية</label>
+            <div class="priority-pills">
+              <button type="button" class="priority-pill active-high" id="prio-high" onclick="selectPriority('high')" title="أولوية عالية">🔴 عالية</button>
+              <button type="button" class="priority-pill active-medium" id="prio-medium" onclick="selectPriority('medium')" title="أولوية متوسطة" style="background:var(--gold-bg);border-color:var(--gold);color:var(--gold)">🟡 متوسطة</button>
+              <button type="button" class="priority-pill" id="prio-low" onclick="selectPriority('low')" title="أولوية منخفضة">🟢 منخفضة</button>
+            </div>
+            <input type="hidden" id="habit-priority-input" value="medium">
+          </div>
+          <div class="step-nav">
+            <button class="btn btn-primary" id="step0-next" onclick="goToStep(1)" style="flex:1">التالي ←</button>
+          </div>
+        </div>
+
+        <!-- Step 2: الإعدادات -->
+        <div class="modal-step" id="modal-step-1">
+          <div class="step-title-badge">2 — الإعدادات</div>
+          <div class="form-group">
+            <label class="form-label">النوع</label>
+            <select class="form-input" id="habit-type-input" aria-label="نوع العادة">
+              <option value="good">✅ إيجابية (أبنيها)</option>
+              <option value="bad">🚫 سلبية (أقللها)</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">الهدف اليومي</label>
+              <input class="form-input" id="habit-target-input" type="number" value="1" min="1" aria-label="الهدف اليومي">
+            </div>
+            <div class="form-group">
+              <label class="form-label">الوحدة</label>
+              <select class="form-input" id="habit-unit-input" aria-label="وحدة الهدف">
+                <option value="times">مرة</option>
+                <option value="minutes">دقيقة</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">هدف الطوارئ</label>
+              <input class="form-input" id="habit-mini-input" type="number" value="1" min="1" aria-label="هدف الطوارئ">
+            </div>
+            <div class="form-group">
+              <label class="form-label">وحدة الطوارئ</label>
+              <select class="form-input" id="habit-mini-unit-input" aria-label="وحدة الطوارئ">
+                <option value="times">مرة</option>
+                <option value="minutes">دقيقة</option>
+              </select>
+            </div>
+          </div>
+          <!-- Repetitions (Feature 2) -->
+          <div class="form-group">
+            <label class="form-label">عدد التكرارات اليومية</label>
+            <div style="display:flex;align-items:center;gap:10px">
+              <input type="number" id="habit-reps-input" class="form-input" min="1" max="50" value="1" style="width:80px;text-align:center" aria-label="عدد التكرارات">
+              <span class="form-label" style="color:var(--text3);margin:0">مرة يومياً</span>
+            </div>
+            <p style="font-size:.72rem;color:var(--text3);margin-top:4px">1 = إنجاز واحد كلاسيكي | أكثر = صناديق تكرار مرئية</p>
+          </div>
+          <div class="step-nav">
+            <button class="btn btn-secondary" onclick="goToStep(0)" style="flex:1">→ السابق</button>
+            <button class="btn btn-primary" onclick="goToStep(2)" style="flex:1">التالي ←</button>
+          </div>
+        </div>
+
+        <!-- Step 3: المظهر -->
+        <div class="modal-step" id="modal-step-2">
+          <div class="step-title-badge">3 — المظهر</div>
+          <div class="form-group">
+            <label class="form-label">الأيقونة</label>
+            <div class="emoji-picker" id="habit-emoji-picker"></div>
+            <input type="hidden" id="habit-emoji-input" value="📚">
+          </div>
+          <div class="form-group">
+            <label class="form-label">اللون</label>
+            <div class="color-picker" id="habit-color-picker"></div>
+            <input type="hidden" id="habit-color-input" value="#2D6A4F">
+          </div>
+          <div class="step-nav">
+            <button class="btn btn-secondary" onclick="goToStep(1)" style="flex:1">→ السابق</button>
+            <button class="btn btn-primary" onclick="saveHabit()" style="flex:1">💾 حفظ</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- REWARD MODAL -->
+<div class="modal-overlay" id="reward-modal"><div class="modal"><div class="modal-header"><h3>مكافأة جديدة</h3><button class="icon-btn" onclick="closeModal('reward-modal')" title="إغلاق">✕</button></div><div class="modal-body"><div class="form-group"><label class="form-label">الاسم</label><input class="form-input" id="reward-name-input" aria-label="اسم المكافأة"></div><div class="form-group"><label class="form-label">الأيقونة</label><input class="form-input" id="reward-emoji-input" value="🎁" aria-label="أيقونة المكافأة"></div><div class="form-group"><label class="form-label">التكلفة (نقاط)</label><input class="form-input" id="reward-cost-input" type="number" value="100" aria-label="تكلفة المكافأة"></div></div><div class="modal-footer"><button class="btn btn-primary" onclick="saveReward()">حفظ</button><button class="btn btn-secondary" onclick="closeModal('reward-modal')">إلغاء</button></div></div></div>
+
+<!-- SKIP MODAL -->
+<div class="modal-overlay" id="skip-modal"><div class="modal"><div class="modal-header"><h3>سبب التخطي</h3><button class="icon-btn" onclick="closeModal('skip-modal')" title="إغلاق">✕</button></div><div class="modal-body"><button class="missed-reason-btn" onclick="confirmSkip('مشغول جداً')">😰 مشغول</button><button class="missed-reason-btn" onclick="confirmSkip('مريض')">🤒 مريض</button><button class="missed-reason-btn" onclick="confirmSkip('نسيت')">😅 نسيت</button><button class="missed-reason-btn" onclick="confirmSkip('ظروف طارئة')">⚡ طارئ</button><button class="missed-reason-btn" onclick="confirmSkip('أخرى')">📝 آخر</button></div></div></div>
+
+<!-- SETTINGS MODAL -->
+<div class="modal-overlay" id="settings-modal"><div class="modal"><div class="modal-header"><h3>⚙️ الإعدادات المتقدمة</h3><button class="icon-btn" onclick="closeModal('settings-modal')" title="إغلاق">✕</button></div><div class="modal-body"><div class="form-group"><label class="form-label">وقت الإشعار اليومي</label><input type="time" id="notif-time" class="form-input" value="09:00" aria-label="وقت الإشعار"></div><button class="btn btn-secondary btn-full" id="request-notif-btn" style="margin-bottom:12px">🔔 تفعيل الإشعارات</button><button class="btn btn-primary btn-full" id="export-data-btn" style="margin-bottom:12px">📤 تصدير البيانات (JSON)</button><label for="import-file" class="btn btn-secondary btn-full" style="cursor:pointer;text-align:center">📥 استيراد بيانات</label><input type="file" id="import-file" accept=".json" style="display:none"><button class="btn btn-danger btn-full" id="reset-app-btn" style="margin-top:12px">⚠️ إعادة تعيين التطبيق بالكامل</button></div></div></div>
+
+<!-- MISSED MODAL -->
+<div class="modal-overlay" id="missed-modal"><div class="modal"><div class="modal-header"><h3>⚠️ عادات فائتة</h3><button class="icon-btn" onclick="closeModal('missed-modal')" title="إغلاق">✕</button></div><div class="modal-body"><p style="margin-bottom:16px">لديك عادات لم تُسجَّل بالأمس. الاستمرارية مهمة!</p><button class="btn btn-primary btn-full" onclick="closeModal('missed-modal')">حسناً، أكمل اليوم 💪</button></div></div></div>
+
+<div class="confetti-wrap" id="confetti-wrap"></div>
+<div class="toast" id="toast"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
