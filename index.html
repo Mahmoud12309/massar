@@ -3,20 +3,28 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>مسار — تتبع عاداتك الذكي | نسخة احترافية</title>
+<title>مسار — تتبع عاداتك بانضباط وقوة | نسخة الأخ المسلم القوي</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <div class="app" id="app">
+  <!-- TOPBAR -->
   <header class="topbar" id="topbar">
-    <div class="topbar-logo">مسار<span>.</span></div>
+    <div class="topbar-logo"><i class="fa-solid fa-shield-halved text-green"></i> مسار<span>.</span></div>
     <div class="topbar-actions">
-      <div class="points-badge">⭐ <span id="points-num">0</span></div>
-      <button class="icon-btn" id="settings-btn" title="الإعدادات" aria-label="الإعدادات">⚙️</button>
-      <button class="emergency-btn" id="emergency-toggle">🆘 طوارئ</button>
-      <button class="icon-btn" id="theme-btn" title="تغيير المظهر" aria-label="تغيير المظهر">🌙</button>
+      <div class="points-badge"><i class="fa-solid fa-star text-gold"></i> <span id="points-num">0</span></div>
+      <button class="icon-btn" id="settings-btn" title="الإعدادات" aria-label="الإعدادات">
+        <i class="fa-solid fa-gear"></i>
+      </button>
+      <button class="emergency-btn" id="emergency-toggle">
+        <i class="fa-solid fa-triangle-exclamation"></i> طوارئ
+      </button>
+      <button class="icon-btn" id="theme-btn" title="تغيير المظهر" aria-label="تغيير المظهر">
+        <i class="fa-solid fa-moon" id="theme-icon"></i>
+      </button>
     </div>
   </header>
 
@@ -24,49 +32,187 @@
     <!-- DASHBOARD -->
     <div class="page active" id="page-dashboard">
       <div class="dash-header">
-        <div><h2 id="greeting">مرحباً 👋</h2><div id="date-display" style="font-size:.8rem;color:var(--text3)"></div></div>
+        <div>
+          <h2 id="greeting">السلام عليك ورحمة الله</h2>
+          <div id="date-display" style="font-size:.85rem;color:var(--text3);font-weight:600"></div>
+        </div>
         <div class="progress-ring-wrap">
-          <svg width="70" height="70" viewBox="0 0 70 70">
-            <circle cx="35" cy="35" r="28" fill="none" stroke="var(--bg3)" stroke-width="7"/>
-            <circle id="ring-progress" cx="35" cy="35" r="28" fill="none" stroke="var(--green)" stroke-width="7" stroke-dasharray="175.9" stroke-dashoffset="175.9" stroke-linecap="round" transform="rotate(-90 35 35)" style="transition:stroke-dashoffset .6s cubic-bezier(.34,1.56,.64,1)"/>
+          <svg width="76" height="76" viewBox="0 0 76 76">
+            <circle cx="38" cy="38" r="31" fill="none" stroke="var(--bg3)" stroke-width="8"/>
+            <circle id="ring-progress" cx="38" cy="38" r="31" fill="none" stroke="var(--green)" stroke-width="8" stroke-dasharray="194.7" stroke-dashoffset="194.7" stroke-linecap="round" transform="rotate(-90 38 38)" style="transition:stroke-dashoffset .6s cubic-bezier(.34,1.56,.64,1)"/>
           </svg>
           <div class="ring-label"><span id="ring-pct">0%</span></div>
         </div>
       </div>
-      <div class="motivational-msg" id="daily-msg">جاري التحميل...</div>
-      <div class="section-title">العادات اليومية</div>
+
+      <!-- HAMZA MOTIVATIONAL BANNER (THE STRONG MUSLIM BROTHER) -->
+      <div class="hamza-banner" id="hamza-banner">
+        <div class="hamza-banner-header">
+          <div class="hamza-banner-avatar">
+            <i class="fa-solid fa-shield-halved"></i>
+          </div>
+          <div class="hamza-banner-info">
+            <div class="hamza-banner-name">الأخ المسلم القوي — حمزة</div>
+            <div class="hamza-banner-creed">«المؤمن القوي خيرٌ وأحبُّ إلى الله من المؤمن الضعيف»</div>
+          </div>
+        </div>
+        <p class="hamza-banner-msg" id="hamza-daily-msg">"استعن بالله ولا تعجز يا أخي! القوة في البدن واليقين في القلب يصنعان المجد. لا مكان للكسل في مسارنا اليوم!"</p>
+        <div class="hamza-banner-actions">
+          <button class="btn btn-sm btn-primary" onclick="showPage('ai');aiQuickSend('حلل عاداتي وأدائي اليوم يا أخي وأعطني توجيهك الصارم')">
+            <i class="fa-solid fa-clipboard-check"></i> قيّم أدائي اليوم
+          </button>
+          <button class="btn btn-sm btn-secondary" onclick="showPage('ai')">
+            <i class="fa-solid fa-comments"></i> استشر الأخ القوي
+          </button>
+        </div>
+      </div>
+
+      <div class="motivational-msg" id="daily-msg">
+        <i class="fa-solid fa-quote-right text-gold" style="margin-left:6px"></i>
+        <span>جاري التحميل...</span>
+      </div>
+
+      <div class="section-title">
+        <i class="fa-solid fa-fire text-gold"></i> العادات اليومية
+      </div>
       <div id="habits-dashboard-list"></div>
     </div>
 
     <!-- HABITS -->
     <div class="page" id="page-habits">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px"><h2>عاداتي</h2><button class="btn btn-primary" onclick="showAddHabitModal()">+ إضافة عادة</button></div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+        <h2><i class="fa-solid fa-clipboard-check text-green"></i> عاداتي</h2>
+        <button class="btn btn-primary" onclick="showAddHabitModal()">
+          <i class="fa-solid fa-plus"></i> إضافة عادة
+        </button>
+      </div>
       <div id="habits-manage-list"></div>
+    </div>
+
+    <!-- DHIKR & ELECTRONIC TASBEEH (FEATURE NEW) -->
+    <div class="page" id="page-dhikr">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+        <div>
+          <h2><i class="fa-solid fa-hands-praying text-green"></i> مسبحة الأذكار</h2>
+          <div style="font-size:.82rem;color:var(--text3)">«ألا بذكر الله تطمئن القلوب»</div>
+        </div>
+        <button class="btn btn-primary" onclick="showAddDhikrModal()" style="font-size:.85rem;padding:8px 14px">
+          <i class="fa-solid fa-plus"></i> ذكر مخصص
+        </button>
+      </div>
+
+      <!-- Athkar Selector -->
+      <div class="section-title">
+        <i class="fa-solid fa-layer-group text-green"></i> اختر الذكر
+      </div>
+      <div class="dhikr-selector-grid" id="dhikr-selector-grid"></div>
+
+      <!-- Electronic Tasbeeh Card -->
+      <div class="tasbeeh-card">
+        <div class="tasbeeh-active-info">
+          <div class="tasbeeh-active-text" id="tasbeeh-active-text">سبحان الله</div>
+          <div class="tasbeeh-active-meaning" id="tasbeeh-active-meaning">تنزيه الله تعالى عن كل نقص وعيب</div>
+        </div>
+
+        <!-- Tasbeeh Dial / Ring -->
+        <div class="tasbeeh-dial-container" id="tasbeeh-dial-container" onclick="tasbeehIncrement()">
+          <svg class="tasbeeh-svg" viewBox="0 0 240 240" width="230" height="230">
+            <circle class="tasbeeh-track" cx="120" cy="120" r="100" fill="none" stroke="var(--bg3)" stroke-width="12"/>
+            <circle id="tasbeeh-progress-ring" class="tasbeeh-progress" cx="120" cy="120" r="100" fill="none" stroke="var(--green)" stroke-width="12" stroke-linecap="round" stroke-dasharray="628.3" stroke-dashoffset="628.3" transform="rotate(-90 120 120)"/>
+          </svg>
+          <div class="tasbeeh-dial-content">
+            <div class="tasbeeh-digits" id="tasbeeh-count">0</div>
+            <div class="tasbeeh-target-badge" id="tasbeeh-target-badge">الهدف: 33</div>
+            <div class="tasbeeh-lap-badge" id="tasbeeh-lap-badge"><i class="fa-solid fa-arrows-rotate"></i> الدورة: 1</div>
+            <div class="tasbeeh-tap-hint"><i class="fa-solid fa-hand-pointer"></i> انقر للعد</div>
+          </div>
+        </div>
+
+        <!-- Target Selector & Controls -->
+        <div class="tasbeeh-controls-row">
+          <div class="tasbeeh-targets">
+            <button class="target-pill active" id="target-33" onclick="setTasbeehTarget(33)">33</button>
+            <button class="target-pill" id="target-100" onclick="setTasbeehTarget(100)">100</button>
+            <button class="target-pill" id="target-0" onclick="setTasbeehTarget(0)">مفتوح</button>
+          </div>
+          <div class="tasbeeh-action-btns">
+            <button class="icon-btn" id="tasbeeh-sound-btn" onclick="toggleTasbeehSound()" title="الصوت" aria-label="الصوت">
+              <i class="fa-solid fa-volume-high"></i>
+            </button>
+            <button class="icon-btn" id="tasbeeh-vibrate-btn" onclick="toggleTasbeehVibrate()" title="الاهتزاز" aria-label="الاهتزاز">
+              <i class="fa-solid fa-mobile-screen"></i>
+            </button>
+            <button class="icon-btn" onclick="resetTasbeeh()" title="إعادة تعيين" aria-label="إعادة تعيين">
+              <i class="fa-solid fa-rotate-right"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dhikr Statistics -->
+      <div class="section-title">
+        <i class="fa-solid fa-chart-pie text-gold"></i> إحصائيات الذكر
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-value text-green" id="dhikr-today-total">0</div>
+          <div class="stat-label">تسبيحات اليوم</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value text-gold" id="dhikr-alltime-total">0</div>
+          <div class="stat-label">إجمالي التسبيح الكلي</div>
+        </div>
+      </div>
     </div>
 
     <!-- REWARDS -->
     <div class="page" id="page-rewards">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px"><h2>المكافآت 🏆</h2><button class="btn btn-primary" onclick="showAddRewardModal()" style="font-size:.85rem;padding:8px 14px">+ مكافأة</button></div>
-      <div class="card" style="text-align:center;margin-bottom:20px"><div style="font-size:2.5rem;font-weight:900;color:var(--gold)" id="reward-pts-display">0</div><div style="font-size:.82rem;color:var(--text3);margin-bottom:10px">نقطة متاحة</div><div style="font-size:.78rem;color:var(--text2)">المستوى <strong id="reward-level">1</strong></div><div class="level-bar-wrap" style="margin-top:8px"><div class="level-bar-fill" id="level-bar-fill" style="width:0%"></div></div></div>
-      <div class="section-title">شاراتي</div><div class="badges-grid" id="badges-grid"></div>
-      <div class="section-title">مكافآتي</div><div id="rewards-list"></div>
-      <div class="section-title">سجل النقاط</div><div class="card" id="points-history-list" style="padding:8px 16px"></div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+        <h2><i class="fa-solid fa-trophy text-gold"></i> المكافآت</h2>
+        <button class="btn btn-primary" onclick="showAddRewardModal()" style="font-size:.85rem;padding:8px 14px">
+          <i class="fa-solid fa-plus"></i> مكافأة
+        </button>
+      </div>
+      <div class="card" style="text-align:center;margin-bottom:20px">
+        <div style="font-size:2.5rem;font-weight:900;color:var(--gold)" id="reward-pts-display">0</div>
+        <div style="font-size:.82rem;color:var(--text3);margin-bottom:10px">نقطة متاحة</div>
+        <div style="font-size:.78rem;color:var(--text2)">المستوى <strong id="reward-level">1</strong></div>
+        <div class="level-bar-wrap" style="margin-top:8px">
+          <div class="level-bar-fill" id="level-bar-fill" style="width:0%"></div>
+        </div>
+      </div>
+      <div class="section-title"><i class="fa-solid fa-medal text-gold"></i> شارات العزيمة</div>
+      <div class="badges-grid" id="badges-grid"></div>
+      <div class="section-title"><i class="fa-solid fa-gift text-green"></i> مكافآتي</div>
+      <div id="rewards-list"></div>
+      <div class="section-title"><i class="fa-solid fa-clock-rotate-left"></i> سجل النقاط</div>
+      <div class="card" id="points-history-list" style="padding:8px 16px"></div>
     </div>
 
     <!-- ANALYTICS -->
     <div class="page" id="page-analytics">
-      <h2 style="margin-bottom:20px">التحليلات 📊</h2>
+      <h2 style="margin-bottom:20px"><i class="fa-solid fa-chart-line text-green"></i> التحليلات والأداء</h2>
       <div class="stats-grid" id="analytics-stats"></div>
-      <div class="card"><div class="section-title">خريطة التقدم (آخر 90 يوم)</div><div id="heatmap-container" class="heatmap-container"></div></div>
-      <div class="chart-wrap"><div class="chart-title">أداء الأسبوع الحالي</div><div class="week-bars" id="week-bars"></div><div style="height:26px"></div></div>
+      <div class="card">
+        <div class="section-title"><i class="fa-solid fa-calendar-days"></i> خريطة التقدم (آخر 90 يوم)</div>
+        <div id="heatmap-container" class="heatmap-container"></div>
+      </div>
+      <div class="chart-wrap">
+        <div class="chart-title"><i class="fa-solid fa-chart-simple"></i> أداء الأسبوع الحالي</div>
+        <div class="week-bars" id="week-bars"></div>
+        <div style="height:26px"></div>
+      </div>
       <div id="insights-section"></div>
-      <div class="chart-wrap"><div class="chart-title">نقاط الأسابيع الأخيرة</div><canvas id="points-chart" height="120"></canvas></div>
+      <div class="chart-wrap">
+        <div class="chart-title"><i class="fa-solid fa-arrow-trend-up"></i> نقاط الأسابيع الأخيرة</div>
+        <canvas id="points-chart" height="120"></canvas>
+      </div>
     </div>
 
-    <!-- POMODORO (Feature 4) -->
+    <!-- POMODORO -->
     <div class="page" id="page-pomodoro">
       <div style="max-width:400px;margin:0 auto;text-align:center;padding:10px 0">
-        <div id="pomodoro-mode-label" class="pomodoro-mode-label">⚡ وقت التركيز</div>
+        <div id="pomodoro-mode-label" class="pomodoro-mode-label"><i class="fa-solid fa-bolt"></i> وقت التركيز</div>
         <div id="pomodoro-session-dots" class="pomodoro-session-dots"></div>
         <div class="pomodoro-ring-wrap">
           <svg viewBox="0 0 120 120" width="220" height="220">
@@ -82,12 +228,18 @@
           </div>
         </div>
         <div class="pomodoro-controls">
-          <button class="btn btn-secondary" onclick="pomodoroReset()" title="إعادة تعيين">🔄 إعادة</button>
-          <button id="pomodoro-main-btn" class="btn btn-primary" onclick="pomodoroToggle()" title="ابدأ/أوقف">▶️ ابدأ</button>
-          <button class="btn btn-secondary" onclick="pomodoroSkipSession()" title="تخطي الجلسة">⏭️ تخطي</button>
+          <button class="btn btn-secondary" onclick="pomodoroReset()" title="إعادة تعيين">
+            <i class="fa-solid fa-rotate-right"></i> إعادة
+          </button>
+          <button id="pomodoro-main-btn" class="btn btn-primary" onclick="pomodoroToggle()" title="ابدأ/أوقف">
+            <i class="fa-solid fa-play"></i> ابدأ
+          </button>
+          <button class="btn btn-secondary" onclick="pomodoroSkipSession()" title="تخطي الجلسة">
+            <i class="fa-solid fa-forward-step"></i> تخطي
+          </button>
         </div>
         <div class="card" style="margin-top:24px;text-align:right">
-          <div class="section-title">إعدادات الجلسة</div>
+          <div class="section-title"><i class="fa-solid fa-sliders"></i> إعدادات الجلسة</div>
           <div class="form-row" style="margin-bottom:12px">
             <div class="form-group" style="margin:0">
               <label class="form-label">وقت التركيز (دقيقة)</label>
@@ -109,75 +261,121 @@
       </div>
     </div>
 
-    <!-- AI ASSISTANT (Feature 5) -->
+    <!-- AI ASSISTANT (THE STRONG MUSLIM BROTHER) -->
     <div class="page" id="page-ai">
       <!-- API Key Setup Overlay -->
       <div id="ai-key-overlay" class="ai-key-overlay" style="display:none">
         <div class="card" style="max-width:380px;width:100%;margin:0 20px">
-          <div style="font-size:1.8rem;text-align:center;margin-bottom:8px">🔑</div>
-          <h3 style="text-align:center;margin-bottom:8px">ربط Gemini AI</h3>
+          <div style="font-size:1.8rem;text-align:center;margin-bottom:8px;color:var(--gold)"><i class="fa-solid fa-key"></i></div>
+          <h3 style="text-align:center;margin-bottom:8px">ربط Google Gemini AI</h3>
           <p style="font-size:.82rem;color:var(--text3);margin-bottom:16px;text-align:center">
-            أدخل مفتاح Google Gemini API للحصول على مساعد ذكاء اصطناعي مجاناً.
-            <br><a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener" style="color:var(--blue-light)">احصل على مفتاح مجاني هنا ↗</a>
+            أدخل مفتاح Gemini API المجاني لإطلاق كامل ذكاء الأخ القوي دون حدود.
+            <br><a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener" style="color:var(--green)">احصل على مفتاح مجاني هنا <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
           </p>
           <div class="form-group">
             <input type="password" id="ai-key-input" class="form-input" placeholder="AIza..." dir="ltr" aria-label="مفتاح Gemini API">
           </div>
           <button class="btn btn-primary btn-full" onclick="saveGeminiKey()">حفظ وتفعيل</button>
-          <button class="btn btn-secondary btn-full" style="margin-top:8px" onclick="document.getElementById('ai-key-overlay').style.display='none'">لاحقاً</button>
+          <button class="btn btn-secondary btn-full" style="margin-top:8px" onclick="document.getElementById('ai-key-overlay').style.display='none'">استخدام المحرك المدمج</button>
         </div>
       </div>
 
       <!-- Chat Header -->
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
-        <div>
-          <h2 style="font-size:1.1rem">🤖 مساعد زاد</h2>
-          <div style="font-size:.72rem;color:var(--text3)">مدعوم بـ Google Gemini</div>
+      <div class="ai-header">
+        <div class="ai-header-profile">
+          <div class="ai-header-avatar">
+            <i class="fa-solid fa-shield-halved"></i>
+          </div>
+          <div>
+            <h2 style="font-size:1.15rem;margin:0">حمزة — الأخ المسلم القوي</h2>
+            <div class="ai-header-sub">
+              <span><i class="fa-solid fa-dumbbell text-gold"></i> قوة البدن</span> • 
+              <span><i class="fa-solid fa-brain text-green"></i> عقل حاد</span> • 
+              <span><i class="fa-solid fa-heart text-red"></i> إيمان وثبات</span>
+            </div>
+          </div>
         </div>
         <div style="display:flex;gap:8px">
-          <button class="icon-btn" onclick="clearAiHistory()" title="مسح المحادثة" aria-label="مسح المحادثة">🗑️</button>
-          <button class="icon-btn" onclick="showGeminiKeyPrompt()" title="تغيير المفتاح" aria-label="تغيير مفتاح API">🔑</button>
+          <button class="icon-btn" onclick="clearAiHistory()" title="مسح المحادثة" aria-label="مسح المحادثة">
+            <i class="fa-solid fa-trash-can"></i>
+          </button>
+          <button class="icon-btn" onclick="showGeminiKeyPrompt()" title="إعدادات المفتاح" aria-label="تغيير مفتاح API">
+            <i class="fa-solid fa-key"></i>
+          </button>
         </div>
       </div>
 
       <!-- Messages -->
-      <div id="ai-messages-list" class="ai-messages-list" aria-label="محادثة مع المساعد"></div>
+      <div id="ai-messages-list" class="ai-messages-list" aria-label="محادثة مع الأخ القوي"></div>
 
       <!-- Input -->
       <div class="ai-input-bar">
         <textarea id="ai-input" class="ai-textarea"
-                  placeholder="اسألني عن عاداتك وأهدافك..."
-                  rows="1" dir="rtl" aria-label="رسالتك للمساعد"
+                  placeholder="استشر أخاك في عاداتك، لياقتك، انضباطك، وأهدافك..."
+                  rows="1" dir="rtl" aria-label="رسالتك للأخ القوي"
                   onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();aiSubmit()}"
                   oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,120)+'px'">
         </textarea>
-        <button class="btn btn-primary" onclick="aiSubmit()" style="padding:10px 16px;flex-shrink:0" title="إرسال">إرسال ←</button>
+        <button class="btn btn-primary" onclick="aiSubmit()" style="padding:10px 16px;flex-shrink:0" title="إرسال">
+          <i class="fa-solid fa-paper-plane"></i>
+        </button>
       </div>
     </div>
   </div>
 
-  <!-- 6-item bottom nav -->
+  <!-- 7-ITEM BOTTOM NAV (RESPONSIVE) -->
   <nav class="bottom-nav">
-    <button class="nav-item active" id="nav-dashboard" onclick="showPage('dashboard')"><span class="nav-icon">🏠</span><span>الرئيسية</span></button>
-    <button class="nav-item" id="nav-habits"    onclick="showPage('habits')"><span class="nav-icon">✅</span><span>العادات</span></button>
-    <button class="nav-item" id="nav-rewards"   onclick="showPage('rewards')"><span class="nav-icon">🏆</span><span>جوائز</span></button>
-    <button class="nav-item" id="nav-analytics" onclick="showPage('analytics')"><span class="nav-icon">📊</span><span>تحليل</span></button>
-    <button class="nav-item" id="nav-pomodoro"  onclick="showPage('pomodoro')"><span class="nav-icon">⏱️</span><span>فوكس</span></button>
-    <button class="nav-item" id="nav-ai"        onclick="showPage('ai')"><span class="nav-icon">🤖</span><span>زاد</span></button>
+    <button class="nav-item active" id="nav-dashboard" onclick="showPage('dashboard')">
+      <span class="nav-icon"><i class="fa-solid fa-house"></i></span>
+      <span>الرئيسية</span>
+    </button>
+    <button class="nav-item" id="nav-habits" onclick="showPage('habits')">
+      <span class="nav-icon"><i class="fa-solid fa-clipboard-check"></i></span>
+      <span>العادات</span>
+    </button>
+    <button class="nav-item" id="nav-dhikr" onclick="showPage('dhikr')">
+      <span class="nav-icon"><i class="fa-solid fa-hands-praying"></i></span>
+      <span>الذكر</span>
+    </button>
+    <button class="nav-item" id="nav-rewards" onclick="showPage('rewards')">
+      <span class="nav-icon"><i class="fa-solid fa-trophy"></i></span>
+      <span>المكافآت</span>
+    </button>
+    <button class="nav-item" id="nav-analytics" onclick="showPage('analytics')">
+      <span class="nav-icon"><i class="fa-solid fa-chart-line"></i></span>
+      <span>التحليلات</span>
+    </button>
+    <button class="nav-item" id="nav-pomodoro" onclick="showPage('pomodoro')">
+      <span class="nav-icon"><i class="fa-solid fa-stopwatch"></i></span>
+      <span>التركيز</span>
+    </button>
+    <button class="nav-item" id="nav-ai" onclick="showPage('ai')">
+      <span class="nav-icon"><i class="fa-solid fa-shield-halved"></i></span>
+      <span>الأخ القوي</span>
+    </button>
   </nav>
 
-  <!-- Companion -->
-  <div class="companion-wrap"><div class="companion-bubble" id="companion-bubble"></div><div class="companion-body" id="companion-body"><svg class="zad-svg" viewBox="0 0 60 60"><ellipse cx="30" cy="38" rx="16" ry="14" fill="var(--green)" stroke="var(--border)" stroke-width="2"/><circle cx="30" cy="22" r="14" fill="var(--green-light)" stroke="var(--border)" stroke-width="2"/><ellipse cx="24" cy="21" rx="3" ry="3.5" fill="var(--border)"/><ellipse cx="36" cy="21" rx="3" ry="3.5" fill="var(--border)"/><circle cx="24.5" cy="21.5" r="1.5" fill="#fff"/><circle cx="36.5" cy="21.5" r="1.5" fill="#fff"/><path id="zad-mouth" d="M24 27 Q30 32 36 27" fill="none" stroke="var(--border)" stroke-width="2" stroke-linecap="round"/><ellipse cx="12" cy="38" rx="5" ry="8" fill="var(--green)" stroke="var(--border)" stroke-width="1.5" transform="rotate(-20 12 38)"/><ellipse cx="48" cy="38" rx="5" ry="8" fill="var(--green)" stroke="var(--border)" stroke-width="1.5" transform="rotate(20 48 38)"/><circle cx="20" cy="26" r="4" fill="var(--red-light)" opacity=".35"/><circle cx="40" cy="26" r="4" fill="var(--red-light)" opacity=".35"/></svg></div></div>
+  <!-- Motivating Floating Companion -->
+  <div class="companion-wrap">
+    <div class="companion-bubble" id="companion-bubble"></div>
+    <div class="companion-body" id="companion-body" title="نصيحة الأخ القوي">
+      <div class="companion-badge">
+        <i class="fa-solid fa-shield-halved"></i>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- ===== MODALS ===== -->
 
-<!-- HABIT MODAL — 3-step (Feature 3) -->
+<!-- HABIT MODAL — 3-step -->
 <div class="modal-overlay" id="habit-modal">
   <div class="modal">
     <div class="modal-header">
-      <h3 id="habit-modal-title">إضافة عادة</h3>
-      <button class="icon-btn" onclick="closeModal('habit-modal')" title="إغلاق" aria-label="إغلاق">✕</button>
+      <h3 id="habit-modal-title"><i class="fa-solid fa-plus text-green"></i> إضافة عادة</h3>
+      <button class="icon-btn" onclick="closeModal('habit-modal')" title="إغلاق" aria-label="إغلاق">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
     </div>
     <div class="modal-body">
       <input type="hidden" id="edit-habit-id">
@@ -193,37 +391,47 @@
           <div class="step-title-badge">1 — الأساسيات</div>
           <div class="form-group">
             <label class="form-label">اسم العادة</label>
-            <input class="form-input" id="habit-name-input" maxlength="50" placeholder="مثال: القراءة اليومية" autofocus oninput="updateCharCounter(this.value.length)" aria-label="اسم العادة">
+            <input class="form-input" id="habit-name-input" maxlength="50" placeholder="مثال: التدريب في النادي، صلاة الفجر، قراءة القرآن..." autofocus oninput="updateCharCounter(this.value.length)" aria-label="اسم العادة">
             <div class="char-counter" id="char-counter">0 / 50</div>
           </div>
           <div class="form-group">
-            <button class="optional-notes-toggle" type="button" onclick="toggleOptionalNotes()" title="ملاحظات اختيارية">أضف ملاحظات اختيارية ▾</button>
+            <button class="optional-notes-toggle" type="button" onclick="toggleOptionalNotes()" title="ملاحظات اختيارية">
+              <i class="fa-solid fa-angle-down"></i> أضف ملاحظات اختيارية
+            </button>
             <div class="optional-notes-area" id="optional-notes-area">
-              <textarea class="form-input" id="habit-base-notes-input" rows="2" placeholder="ملاحظات عامة عن هذه العادة..." dir="rtl" aria-label="ملاحظات العادة"></textarea>
+              <textarea class="form-input" id="habit-base-notes-input" rows="2" placeholder="ملاحظات وتوجيهات خاصة بهذه العادة..." dir="rtl" aria-label="ملاحظات العادة"></textarea>
             </div>
           </div>
           <div class="form-group">
             <label class="form-label">الأولوية</label>
             <div class="priority-pills">
-              <button type="button" class="priority-pill active-high" id="prio-high" onclick="selectPriority('high')" title="أولوية عالية">🔴 عالية</button>
-              <button type="button" class="priority-pill active-medium" id="prio-medium" onclick="selectPriority('medium')" title="أولوية متوسطة" style="background:var(--gold-bg);border-color:var(--gold);color:var(--gold)">🟡 متوسطة</button>
-              <button type="button" class="priority-pill" id="prio-low" onclick="selectPriority('low')" title="أولوية منخفضة">🟢 منخفضة</button>
+              <button type="button" class="priority-pill" id="prio-high" onclick="selectPriority('high')" title="أولوية عالية">
+                <i class="fa-solid fa-circle text-red"></i> عالية
+              </button>
+              <button type="button" class="priority-pill active-medium" id="prio-medium" onclick="selectPriority('medium')" title="أولوية متوسطة">
+                <i class="fa-solid fa-circle text-gold"></i> متوسطة
+              </button>
+              <button type="button" class="priority-pill" id="prio-low" onclick="selectPriority('low')" title="أولوية منخفضة">
+                <i class="fa-solid fa-circle text-green"></i> منخفضة
+              </button>
             </div>
             <input type="hidden" id="habit-priority-input" value="medium">
           </div>
           <div class="step-nav">
-            <button class="btn btn-primary" id="step0-next" onclick="goToStep(1)" style="flex:1">التالي ←</button>
+            <button class="btn btn-primary" id="step0-next" onclick="goToStep(1)" style="flex:1">
+              التالي <i class="fa-solid fa-arrow-left"></i>
+            </button>
           </div>
         </div>
 
         <!-- Step 2: الإعدادات -->
         <div class="modal-step" id="modal-step-1">
-          <div class="step-title-badge">2 — الإعدادات</div>
+          <div class="step-title-badge">2 — الإعدادات والهدف</div>
           <div class="form-group">
             <label class="form-label">النوع</label>
             <select class="form-input" id="habit-type-input" aria-label="نوع العادة">
-              <option value="good">✅ إيجابية (أبنيها)</option>
-              <option value="bad">🚫 سلبية (أقللها)</option>
+              <option value="good">إيجابية (أبنيها وأعززها)</option>
+              <option value="bad">سلبية (أتخلص منها وأقللها)</option>
             </select>
           </div>
           <div class="form-row">
@@ -241,7 +449,7 @@
           </div>
           <div class="form-row">
             <div class="form-group">
-              <label class="form-label">هدف الطوارئ</label>
+              <label class="form-label">هدف الطوارئ (عند الانشغال)</label>
               <input class="form-input" id="habit-mini-input" type="number" value="1" min="1" aria-label="هدف الطوارئ">
             </div>
             <div class="form-group">
@@ -252,37 +460,45 @@
               </select>
             </div>
           </div>
-          <!-- Repetitions (Feature 2) -->
+          <!-- Repetitions -->
           <div class="form-group">
             <label class="form-label">عدد التكرارات اليومية</label>
             <div style="display:flex;align-items:center;gap:10px">
               <input type="number" id="habit-reps-input" class="form-input" min="1" max="50" value="1" style="width:80px;text-align:center" aria-label="عدد التكرارات">
               <span class="form-label" style="color:var(--text3);margin:0">مرة يومياً</span>
             </div>
-            <p style="font-size:.72rem;color:var(--text3);margin-top:4px">1 = إنجاز واحد كلاسيكي | أكثر = صناديق تكرار مرئية</p>
+            <p style="font-size:.75rem;color:var(--text3);margin-top:4px">1 = إنجاز مباشر | أكثر = مربعات إنجاز مرئية</p>
           </div>
           <div class="step-nav">
-            <button class="btn btn-secondary" onclick="goToStep(0)" style="flex:1">→ السابق</button>
-            <button class="btn btn-primary" onclick="goToStep(2)" style="flex:1">التالي ←</button>
+            <button class="btn btn-secondary" onclick="goToStep(0)" style="flex:1">
+              <i class="fa-solid fa-arrow-right"></i> السابق
+            </button>
+            <button class="btn btn-primary" onclick="goToStep(2)" style="flex:1">
+              التالي <i class="fa-solid fa-arrow-left"></i>
+            </button>
           </div>
         </div>
 
         <!-- Step 3: المظهر -->
         <div class="modal-step" id="modal-step-2">
-          <div class="step-title-badge">3 — المظهر</div>
+          <div class="step-title-badge">3 — المظهر والرمز</div>
           <div class="form-group">
             <label class="form-label">الأيقونة</label>
-            <div class="emoji-picker" id="habit-emoji-picker"></div>
-            <input type="hidden" id="habit-emoji-input" value="📚">
+            <div class="icon-picker" id="habit-icon-picker"></div>
+            <input type="hidden" id="habit-emoji-input" value="fa-dumbbell">
           </div>
           <div class="form-group">
             <label class="form-label">اللون</label>
             <div class="color-picker" id="habit-color-picker"></div>
-            <input type="hidden" id="habit-color-input" value="#2D6A4F">
+            <input type="hidden" id="habit-color-input" value="#10B981">
           </div>
           <div class="step-nav">
-            <button class="btn btn-secondary" onclick="goToStep(1)" style="flex:1">→ السابق</button>
-            <button class="btn btn-primary" onclick="saveHabit()" style="flex:1">💾 حفظ</button>
+            <button class="btn btn-secondary" onclick="goToStep(1)" style="flex:1">
+              <i class="fa-solid fa-arrow-right"></i> السابق
+            </button>
+            <button class="btn btn-primary" onclick="saveHabit()" style="flex:1">
+              <i class="fa-solid fa-floppy-disk"></i> حفظ العادة
+            </button>
           </div>
         </div>
       </div>
@@ -290,20 +506,159 @@
   </div>
 </div>
 
+<!-- ADD CUSTOM DHIKR MODAL -->
+<div class="modal-overlay" id="dhikr-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3><i class="fa-solid fa-plus text-green"></i> إضافة ذكر مخصص</h3>
+      <button class="icon-btn" onclick="closeModal('dhikr-modal')" title="إغلاق">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">نص الذكر</label>
+        <input class="form-input" id="custom-dhikr-text" placeholder="مثال: لا حول ولا قوة إلا بالله" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">الفضل أو المعنى (اختياري)</label>
+        <input class="form-input" id="custom-dhikr-meaning" placeholder="مثال: كنز من كنوز الجنة ودافع للبلاء">
+      </div>
+      <div class="form-group">
+        <label class="form-label">الهدف الافتراضي</label>
+        <select class="form-input" id="custom-dhikr-target">
+          <option value="33">33 مرة</option>
+          <option value="100">100 مرة</option>
+          <option value="0">مفتوح (حُر)</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary" onclick="saveCustomDhikr()"><i class="fa-solid fa-check"></i> حفظ الذكر</button>
+      <button class="btn btn-secondary" onclick="closeModal('dhikr-modal')">إلغاء</button>
+    </div>
+  </div>
+</div>
+
 <!-- REWARD MODAL -->
-<div class="modal-overlay" id="reward-modal"><div class="modal"><div class="modal-header"><h3>مكافأة جديدة</h3><button class="icon-btn" onclick="closeModal('reward-modal')" title="إغلاق">✕</button></div><div class="modal-body"><div class="form-group"><label class="form-label">الاسم</label><input class="form-input" id="reward-name-input" aria-label="اسم المكافأة"></div><div class="form-group"><label class="form-label">الأيقونة</label><input class="form-input" id="reward-emoji-input" value="🎁" aria-label="أيقونة المكافأة"></div><div class="form-group"><label class="form-label">التكلفة (نقاط)</label><input class="form-input" id="reward-cost-input" type="number" value="100" aria-label="تكلفة المكافأة"></div></div><div class="modal-footer"><button class="btn btn-primary" onclick="saveReward()">حفظ</button><button class="btn btn-secondary" onclick="closeModal('reward-modal')">إلغاء</button></div></div></div>
+<div class="modal-overlay" id="reward-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3><i class="fa-solid fa-gift text-gold"></i> مكافأة جديدة</h3>
+      <button class="icon-btn" onclick="closeModal('reward-modal')" title="إغلاق"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">اسم المكافأة</label>
+        <input class="form-input" id="reward-name-input" placeholder="مثال: جلسة قراءة، وجبة مفضلة، استراحة..." aria-label="اسم المكافأة">
+      </div>
+      <div class="form-group">
+        <label class="form-label">الأيقونة</label>
+        <div class="icon-picker" id="reward-icon-picker"></div>
+        <input type="hidden" id="reward-emoji-input" value="fa-gift">
+      </div>
+      <div class="form-group">
+        <label class="form-label">التكلفة (نقاط)</label>
+        <input class="form-input" id="reward-cost-input" type="number" value="100" aria-label="تكلفة المكافأة">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary" onclick="saveReward()"><i class="fa-solid fa-check"></i> حفظ</button>
+      <button class="btn btn-secondary" onclick="closeModal('reward-modal')">إلغاء</button>
+    </div>
+  </div>
+</div>
 
 <!-- SKIP MODAL -->
-<div class="modal-overlay" id="skip-modal"><div class="modal"><div class="modal-header"><h3>سبب التخطي</h3><button class="icon-btn" onclick="closeModal('skip-modal')" title="إغلاق">✕</button></div><div class="modal-body"><button class="missed-reason-btn" onclick="confirmSkip('مشغول جداً')">😰 مشغول</button><button class="missed-reason-btn" onclick="confirmSkip('مريض')">🤒 مريض</button><button class="missed-reason-btn" onclick="confirmSkip('نسيت')">😅 نسيت</button><button class="missed-reason-btn" onclick="confirmSkip('ظروف طارئة')">⚡ طارئ</button><button class="missed-reason-btn" onclick="confirmSkip('أخرى')">📝 آخر</button></div></div></div>
+<div class="modal-overlay" id="skip-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3><i class="fa-solid fa-circle-question text-gold"></i> سبب التخطي</h3>
+      <button class="icon-btn" onclick="closeModal('skip-modal')" title="إغلاق"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <button class="missed-reason-btn" onclick="confirmSkip('مشغول جداً')">
+        <i class="fa-solid fa-briefcase"></i> مشغول جداً بأمر طارئ
+      </button>
+      <button class="missed-reason-btn" onclick="confirmSkip('وعكة صحية')">
+        <i class="fa-solid fa-bed-pulse"></i> وعكة صحية أو إرهاق شديد
+      </button>
+      <button class="missed-reason-btn" onclick="confirmSkip('نسيت')">
+        <i class="fa-solid fa-clock"></i> نسيت وانشغلت
+      </button>
+      <button class="missed-reason-btn" onclick="confirmSkip('ظروف قاهرة')">
+        <i class="fa-solid fa-triangle-exclamation"></i> ظروف قاهرة
+      </button>
+      <button class="missed-reason-btn" onclick="confirmSkip('أخرى')">
+        <i class="fa-solid fa-pen-nib"></i> سبب آخر
+      </button>
+    </div>
+  </div>
+</div>
 
 <!-- SETTINGS MODAL -->
-<div class="modal-overlay" id="settings-modal"><div class="modal"><div class="modal-header"><h3>⚙️ الإعدادات المتقدمة</h3><button class="icon-btn" onclick="closeModal('settings-modal')" title="إغلاق">✕</button></div><div class="modal-body"><div class="form-group"><label class="form-label">وقت الإشعار اليومي</label><input type="time" id="notif-time" class="form-input" value="09:00" aria-label="وقت الإشعار"></div><button class="btn btn-secondary btn-full" id="request-notif-btn" style="margin-bottom:12px">🔔 تفعيل الإشعارات</button><button class="btn btn-primary btn-full" id="export-data-btn" style="margin-bottom:12px">📤 تصدير البيانات (JSON)</button><label for="import-file" class="btn btn-secondary btn-full" style="cursor:pointer;text-align:center">📥 استيراد بيانات</label><input type="file" id="import-file" accept=".json" style="display:none"><button class="btn btn-danger btn-full" id="reset-app-btn" style="margin-top:12px">⚠️ إعادة تعيين التطبيق بالكامل</button></div></div></div>
+<div class="modal-overlay" id="settings-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3><i class="fa-solid fa-gear text-green"></i> الإعدادات المتقدمة</h3>
+      <button class="icon-btn" onclick="closeModal('settings-modal')" title="إغلاق"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">وقت الإشعار اليومي</label>
+        <input type="time" id="notif-time" class="form-input" value="09:00" aria-label="وقت الإشعار">
+      </div>
+      <button class="btn btn-secondary btn-full" id="request-notif-btn" style="margin-bottom:12px">
+        <i class="fa-solid fa-bell"></i> تفعيل الإشعارات
+      </button>
+      <button class="btn btn-primary btn-full" id="export-data-btn" style="margin-bottom:12px">
+        <i class="fa-solid fa-download"></i> تصدير البيانات (JSON)
+      </button>
+      <label for="import-file" class="btn btn-secondary btn-full" style="cursor:pointer;text-align:center">
+        <i class="fa-solid fa-upload"></i> استيراد بيانات
+      </label>
+      <input type="file" id="import-file" accept=".json" style="display:none">
+      <button class="btn btn-danger btn-full" id="reset-app-btn" style="margin-top:16px">
+        <i class="fa-solid fa-trash-can"></i> إعادة تعيين التطبيق بالكامل
+      </button>
+    </div>
+  </div>
+</div>
 
 <!-- MISSED MODAL -->
-<div class="modal-overlay" id="missed-modal"><div class="modal"><div class="modal-header"><h3>⚠️ عادات فائتة</h3><button class="icon-btn" onclick="closeModal('missed-modal')" title="إغلاق">✕</button></div><div class="modal-body"><p style="margin-bottom:16px">لديك عادات لم تُسجَّل بالأمس. الاستمرارية مهمة!</p><button class="btn btn-primary btn-full" onclick="closeModal('missed-modal')">حسناً، أكمل اليوم 💪</button></div></div></div>
+<div class="modal-overlay" id="missed-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3><i class="fa-solid fa-triangle-exclamation text-red"></i> عادات فائتة بالأمس</h3>
+      <button class="icon-btn" onclick="closeModal('missed-modal')" title="إغلاق"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <p style="margin-bottom:16px;line-height:1.7">
+        يا أخي، المسلم القوي لا يلتفت للوراء بندم، بل يعوض اليوم بعزيمة مضاعفة! الاستمرارية سر الانتصار.
+      </p>
+      <button class="btn btn-primary btn-full" onclick="closeModal('missed-modal')">
+        <i class="fa-solid fa-hand-fist"></i> حسناً، سأنطلق اليوم بقوة!
+      </button>
+    </div>
+  </div>
+</div>
 
 <div class="confetti-wrap" id="confetti-wrap"></div>
 <div class="toast" id="toast"></div>
+
+<!-- DHIKR MILESTONE REWARD BANNER (SLIDES FROM TOP) -->
+<div class="dhikr-milestone-banner" id="dhikr-milestone-banner" onclick="this.classList.remove('show')">
+  <div class="milestone-badge-glow">
+    <i class="fa-solid fa-seedling text-green"></i>
+  </div>
+  <div class="milestone-info">
+    <div class="milestone-title-row">
+      <strong id="milestone-title">أحسنت يا بطل! عاش، أكمل!</strong>
+      <span class="milestone-pts-pill" id="milestone-pts">+2 نقطة</span>
+    </div>
+    <div class="milestone-msg" id="milestone-msg">ذكر الله نور وبركة في قلبك.. واصل حتى تصل لهدفك!</div>
+  </div>
+</div>
 
 <script src="script.js"></script>
 </body>
